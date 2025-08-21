@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+// Product Category Schema
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100) // Limit length
+  imageUrl  String?   @db.VarChar(2048) // URL length limit
+  slug      String    @unique @db.VarChar(200) // Unique slug for SEO
+  isActive  Boolean   @default(true)
+  isDeleted Boolean   @default(false)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([slug, isActive, isDeleted]) // Index for performance
+}
+
+// Product Schema
+model Product {
+  id            Int                 @id @default(autoincrement())
+  name          String              @db.VarChar(255)
+  slug          String              @unique @db.VarChar(100)
+  description   String?             @db.Text
+  basePrice     Decimal             @db.Decimal(10, 2) // Use Decimal for precision
+  categoryId    Int
+  category      Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict) // Prevent deleting category with products
+  images        ProductImage[]
+  attributes    ProductAttribute[]
+  isActive      Boolean             @default(true)
+  isDeleted     Boolean             @default(false)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  @@index([categoryId, slug, isActive, isDeleted])
+}
+
+// Product Image Schema
+model ProductImage {
+  id           Int      @id @default(autoincrement())
+  url          String   @db.VarChar(2048) // Limit URL length
+  altText      String?  @db.VarChar(255) // For accessibility
+  productId    Int
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Delete images if product is deleted
+  isActive     Boolean  @default(true)
+  isDeleted    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([productId])
+}
+
+// Attribute Schema (e.g., Size, Color)
+model Attribute {
+  id           Int               @id @default(autoincrement())
+  name         String            @db.VarChar(100)
+  options      AttributeOption[]
+  productAttributes ProductAttribute[]
+  isActive     Boolean           @default(true)
+  isDeleted    Boolean           @default(false)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  @@index([name, isActive, isDeleted])
+}
+
+// Attribute Option Schema (e.g., Small, Medium, Red)
+model AttributeOption {
+  id           Int               @id @default(autoincrement())
+  value        String            @db.VarChar(100)
+  description  String?           @db.Text // For additional details
+  attributeId  Int
+  attribute    Attribute         @relation(fields: [attributeId], references: [id], onDelete: Restrict) // Prevent deleting attribute with options
+  productAttributes ProductAttribute[]
+  isActive     Boolean           @default(true)
+  isDeleted    Boolean           @default(false)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  @@index([attributeId])
+}
+
+// Product Attribute Schema (Links product to attribute and option)
+model ProductAttribute {
+  id                Int             @id @default(autoincrement())
+  productId         Int
+  product           Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  attributeId       Int
+  attribute         Attribute       @relation(fields: [attributeId], references: [id], onDelete: Restrict)
+  attributeOptionId Int
+  attributeOption   AttributeOption @relation(fields: [attributeOptionId], references: [id], onDelete: Restrict)
+  priceAdjustment   Decimal         @db.Decimal(10, 2) @default(0.00) // Use Decimal
+  isActive          Boolean         @default(true)
+  isDeleted         Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  @@unique([productId, attributeId, attributeOptionId]) // Prevent duplicate combinations
+  @@index([productId, attributeId, attributeOptionId])
+}
+
+
+
+// // Order Schema for tracking customer orders
+// model Order {
+//   id           Int         @id @default(autoincrement())
+//   userId       Int
+//   user         User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+//   total        Decimal     @db.Decimal(10, 2)
+//   status       String      @db.VarChar(50) // e.g., Pending, Shipped, Delivered
+//   orderItems   OrderItem[]
+//   isActive     Boolean     @default(true)
+//   isDeleted    Boolean     @default(false)
+//   createdAt    DateTime    @default(now())
+//   updatedAt    DateTime    @updatedAt
+//   createdBy    Int?        @map("created_by")
+//   updatedBy    Int?        @map("updated_by")
+//   @@index([userId, status])
+// }
+
+// // Order Item Schema for individual items in an order
+// model OrderItem {
+//   id                Int             @id @default(autoincrement())
+//   orderId           Int
+//   order             Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+//   productId         Int
+//   product           Product         @relation(fields: [productId], references: [id], onDelete: Restrict)
+//   attributeOptionId Int?
+//   attributeOption   AttributeOption? @relation(fields: [attributeOptionId], references: [id], onDelete: Restrict)
+//   customerDesignId  Int?
+//   customerDesign    CustomerDesign?  @relation(fields: [customerDesignId], references: [id], onDelete: Restrict)
+//   quantity          Int             @default(1)
+//   unitPrice         Decimal         @db.Decimal(10, 2)
+//   isActive          Boolean         @default(true)
+//   isDeleted         Boolean         @default(false)
+//   createdAt         DateTime        @default(now())
+//   updatedAt         DateTime        @updatedAt
+//   createdBy         Int?            @map("created_by")
+//   updatedBy         Int?            @map("updated_by")
+//   @@index([orderId, productId])
+// }
