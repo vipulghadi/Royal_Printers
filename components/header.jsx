@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Menu, Printer, Search } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import CartSheet from "@/components/cart-sheet"
+
 import { useState } from "react"
 
 function MobileNav() {
@@ -125,8 +125,7 @@ export default function Header() {
           </Button>
         </form>
 
-        {/* Cart drawer */}
-        <CartSheet />
+
       </div>
     </header>
   )
