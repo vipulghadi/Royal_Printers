@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useEffect, useMemo, useState } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
@@ -58,49 +58,52 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <Filters
-        defaults={{
-          q: query,
-          category,
-          sort,
-          price
-        }}
-        onChange={handleFilterChange}
-      />
-
-      {loading ? (
-        <div className="grid gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 9 }).map((_, i) => <Skeleton key={i} className="h-[320px] rounded-xl" />)}
-        </div>
-      ) : (
-        <>
-          <div className="grid gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3">
-            {pageItems.map(p => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-
-          <div className="mt-8">
-            <Pagination>
-              <PaginationContent>
-                {Array.from({ length: totalPages }).map((_, i) => {
-                  const isActive = i + 1 === page
-                  const params = new URLSearchParams(searchParams.toString())
-                  params.set("page", String(i + 1))
-                  return (
-                    <PaginationItem key={i}>
-                      <PaginationLink isActive={isActive} href={`/products?${params.toString()}`}>
-                        {i + 1}
-                      </PaginationLink>
-                    </PaginationItem>
-                  )
-                })}
-              </PaginationContent>
-            </Pagination>
-          </div>
-        </>
-      )}
+    <div>
+        Products Page Coming Soon!
     </div>
+    // <div className="max-w-7xl mx-auto px-4 py-8">
+    //   <Filters
+    //     defaults={{
+    //       q: query,
+    //       category,
+    //       sort,
+    //       price
+    //     }}
+    //     onChange={handleFilterChange}
+    //   />
+
+    //   {loading ? (
+    //     <div className="grid gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3">
+    //       {Array.from({ length: 9 }).map((_, i) => <Skeleton key={i} className="h-[320px] rounded-xl" />)}
+    //     </div>
+    //   ) : (
+    //     <>
+    //       <div className="grid gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3">
+    //         {pageItems.map(p => (
+    //           <ProductCard key={p.id} product={p} />
+    //         ))}
+    //       </div>
+
+    //       <div className="mt-8">
+    //         <Pagination>
+    //           <PaginationContent>
+    //             {Array.from({ length: totalPages }).map((_, i) => {
+    //               const isActive = i + 1 === page
+    //               const params = new URLSearchParams(searchParams.toString())
+    //               params.set("page", String(i + 1))
+    //               return (
+    //                 <PaginationItem key={i}>
+    //                   <PaginationLink isActive={isActive} href={`/products?${params.toString()}`}>
+    //                     {i + 1}
+    //                   </PaginationLink>
+    //                 </PaginationItem>
+    //               )
+    //             })}
+    //           </PaginationContent>
+    //         </Pagination>
+    //       </div>
+    //     </>
+    //   )}
+    // </div>
   )
 }

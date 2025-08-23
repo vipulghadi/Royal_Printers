@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Menu, Printer, Search } from "lucide-react"
-import { useEffect, useState } from "react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import CartSheet from "@/components/cart-sheet"
+import { useState } from "react"
 
 function MobileNav() {
   return (
@@ -34,12 +34,7 @@ function MobileNav() {
 export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const [q, setQ] = useState(searchParams.get("q") || "")
-
-  useEffect(() => {
-    setQ(searchParams.get("q") || "")
-  }, [searchParams])
+  const [q, setQ] = useState("")
 
   const onSearch = (e) => {
     e.preventDefault()

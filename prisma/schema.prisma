@@ -94,7 +94,7 @@ model ProductAttribute {
   attribute         Attribute       @relation(fields: [attributeId], references: [id], onDelete: Restrict)
   attributeOptionId Int
   attributeOption   AttributeOption @relation(fields: [attributeOptionId], references: [id], onDelete: Restrict)
-  priceAdjustment   Decimal         @db.Decimal(10, 2) @default(0.00) // Use Decimal
+  priceAdjustment   Decimal         @db.Decimal(10, 2) @default(0.00) 
   isActive          Boolean         @default(true)
   isDeleted         Boolean         @default(false)
   createdAt         DateTime        @default(now())
