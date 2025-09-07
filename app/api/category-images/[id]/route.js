@@ -1,5 +1,5 @@
 import { apiResponse } from "@/lib/apiResponse";
-import { prisma } from "@/lib/prisma";
+import  prisma  from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
 
 
