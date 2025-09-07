@@ -73,7 +73,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
     
         // Check if the new value already exists
         const existingAttributeOption = await prisma.AttributeOption.findFirst({
-        where: { value: parsedData.value, isDeleted: false, attributeId: parsedData.attributeId },
+        where: { value: parsedData.value, attributeId: parsedData.attributeId },
         });
     
         if (existingAttributeOption && existingAttributeOption.id !== parseInt(id)) {
