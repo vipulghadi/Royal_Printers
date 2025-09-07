@@ -7,85 +7,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
-// Product Category Schema
+// =============================
+// Category
+// =============================
 model Category {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(100) // Limit length
-  imageUrl  String?   @db.VarChar(2048) // URL length limit
-  slug      String    @unique @db.VarChar(200) // Unique slug for SEO
-  isActive  Boolean   @default(true)
-  isDeleted Boolean   @default(false)
+  id        Int             @id @default(autoincrement())
+  name      String          @db.VarChar(100)
+  slug      String          @unique @db.VarChar(200)
+  isActive  Boolean         @default(true)
   products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  images    CategoryImage[]
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 
-  @@index([slug, isActive, isDeleted]) // Index for performance
+  @@index([slug, isActive])
 }
 
-// Product Schema
+model CategoryImage {
+  id         Int      @id @default(autoincrement())
+  url        String   @db.VarChar(2048)
+  altText    String?  @db.VarChar(255)
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([categoryId])
+}
+
+// =============================
+// Product
+// =============================
 model Product {
   id            Int                 @id @default(autoincrement())
   name          String              @db.VarChar(255)
   slug          String              @unique @db.VarChar(100)
   description   String?             @db.Text
-  basePrice     Decimal             @db.Decimal(10, 2) // Use Decimal for precision
-  categoryId    Int
-  category      Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict) // Prevent deleting category with products
+  basePrice     Decimal             @db.Decimal(10, 2)
+  categoryId    Int?
+  category      Category?           @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   images        ProductImage[]
   attributes    ProductAttribute[]
+  isTrending    Boolean             @default(false)
+  isNew         Boolean             @default(false)
+  isFeatured    Boolean             @default(false)
   isActive      Boolean             @default(true)
-  isDeleted     Boolean             @default(false)
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
-  @@index([categoryId, slug, isActive, isDeleted])
+
+  @@index([categoryId, slug, isActive])
 }
 
-// Product Image Schema
 model ProductImage {
   id           Int      @id @default(autoincrement())
-  url          String   @db.VarChar(2048) // Limit URL length
-  altText      String?  @db.VarChar(255) // For accessibility
+  url          String   @db.VarChar(2048)
+  altText      String?  @db.VarChar(255)
   productId    Int
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // Delete images if product is deleted
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   isActive     Boolean  @default(true)
-  isDeleted    Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   @@index([productId])
 }
 
-// Attribute Schema (e.g., Size, Color)
+// =============================
+// Attributes
+// =============================
 model Attribute {
-  id           Int               @id @default(autoincrement())
-  name         String            @db.VarChar(100)
-  options      AttributeOption[]
+  id                Int               @id @default(autoincrement())
+  name              String            @db.VarChar(100)
+  options           AttributeOption[]
   productAttributes ProductAttribute[]
-  isActive     Boolean           @default(true)
-  isDeleted    Boolean           @default(false)
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
-  @@index([name, isActive, isDeleted])
+  isActive          Boolean           @default(true)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([name, isActive])
 }
 
-// Attribute Option Schema (e.g., Small, Medium, Red)
 model AttributeOption {
-  id           Int               @id @default(autoincrement())
-  value        String            @db.VarChar(100)
-  description  String?           @db.Text // For additional details
-  attributeId  Int
-  attribute    Attribute         @relation(fields: [attributeId], references: [id], onDelete: Restrict) // Prevent deleting attribute with options
+  id                Int               @id @default(autoincrement())
+  value             String            @db.VarChar(100)
+  description       String?           @db.Text
+  attributeId       Int
+  attribute         Attribute         @relation(fields: [attributeId], references: [id], onDelete: Restrict)
   productAttributes ProductAttribute[]
-  isActive     Boolean           @default(true)
-  isDeleted    Boolean           @default(false)
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
+  isActive          Boolean           @default(true)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
   @@index([attributeId])
 }
 
-// Product Attribute Schema (Links product to attribute and option)
+// =============================
+// Product Attributes
+// =============================
 model ProductAttribute {
   id                Int             @id @default(autoincrement())
   productId         Int
@@ -94,52 +112,11 @@ model ProductAttribute {
   attribute         Attribute       @relation(fields: [attributeId], references: [id], onDelete: Restrict)
   attributeOptionId Int
   attributeOption   AttributeOption @relation(fields: [attributeOptionId], references: [id], onDelete: Restrict)
-  priceAdjustment   Decimal         @db.Decimal(10, 2) @default(0.00) 
+  priceAdjustment   Decimal         @db.Decimal(10, 2) @default(0.00)
   isActive          Boolean         @default(true)
-  isDeleted         Boolean         @default(false)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
-  @@unique([productId, attributeId, attributeOptionId]) // Prevent duplicate combinations
+
+  @@unique([productId, attributeId, attributeOptionId])
   @@index([productId, attributeId, attributeOptionId])
 }
-
-
-
-// // Order Schema for tracking customer orders
-// model Order {
-//   id           Int         @id @default(autoincrement())
-//   userId       Int
-//   user         User        @relation(fields: [userId], references: [id], onDelete: Restrict)
-//   total        Decimal     @db.Decimal(10, 2)
-//   status       String      @db.VarChar(50) // e.g., Pending, Shipped, Delivered
-//   orderItems   OrderItem[]
-//   isActive     Boolean     @default(true)
-//   isDeleted    Boolean     @default(false)
-//   createdAt    DateTime    @default(now())
-//   updatedAt    DateTime    @updatedAt
-//   createdBy    Int?        @map("created_by")
-//   updatedBy    Int?        @map("updated_by")
-//   @@index([userId, status])
-// }
-
-// // Order Item Schema for individual items in an order
-// model OrderItem {
-//   id                Int             @id @default(autoincrement())
-//   orderId           Int
-//   order             Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
-//   productId         Int
-//   product           Product         @relation(fields: [productId], references: [id], onDelete: Restrict)
-//   attributeOptionId Int?
-//   attributeOption   AttributeOption? @relation(fields: [attributeOptionId], references: [id], onDelete: Restrict)
-//   customerDesignId  Int?
-//   customerDesign    CustomerDesign?  @relation(fields: [customerDesignId], references: [id], onDelete: Restrict)
-//   quantity          Int             @default(1)
-//   unitPrice         Decimal         @db.Decimal(10, 2)
-//   isActive          Boolean         @default(true)
-//   isDeleted         Boolean         @default(false)
-//   createdAt         DateTime        @default(now())
-//   updatedAt         DateTime        @updatedAt
-//   createdBy         Int?            @map("created_by")
-//   updatedBy         Int?            @map("updated_by")
-//   @@index([orderId, productId])
-// }

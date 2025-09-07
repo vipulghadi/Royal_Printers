@@ -10,14 +10,14 @@ const updateProductAttributeSchema = z.object({
     attributeId:z.number().positive(),
     attributeOptionId:z.number().positive(),
     priceAdjustment:z.number().min(0),
-    isActive:z.boolean()
+    
 });
 
 export  const GET = async (req, { params }) => {
     try {
       const { id } = params;
       const attribute = await prisma.ProductAttribute.findFirst({
-        where: { id: Number(id), isDeleted: false },
+        where: { id: Number(id)},
       });
   
       if (!attribute) {
@@ -66,7 +66,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
         }
     
         const existing = await prisma.ProductAttribute.findFirst({
-          where: { id: Number(id), isDeleted: false },
+          where: { id: Number(id) },
         });
     
         if (!existing) {
@@ -111,7 +111,7 @@ export const DELETE = requireAdmin(async (req, { params }) => {
         const { id } = await params;
     
         const existing = await prisma.ProductAttribute.findFirst({
-          where: { id: Number(id), isDeleted: false },
+          where: { id: Number(id) },
         });
     
         if (!existing) {
@@ -125,7 +125,7 @@ export const DELETE = requireAdmin(async (req, { params }) => {
     
         await prisma.ProductAttribute.update({
           where: { id: Number(id) },
-          data: { isDeleted: true },
+    
         });
     
         return apiResponse({

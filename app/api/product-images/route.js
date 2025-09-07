@@ -21,7 +21,7 @@ export const GET = async (req) => {
       });
     }
     const productImages = await prisma.productImage.findMany({
-      where: { productId, isDeleted: false, isActive: true },
+      where: { productId,  isActive: true },
       orderBy: { createdAt: "desc" },
     });
 
@@ -65,7 +65,7 @@ export const POST = requireAdmin(async (req) => {
 
     // Check if the product exists
     const product = await prisma.Product.findUnique({
-      where: { id: productId, isDeleted: false },
+      where: { id: productId},
     });
 
     if (!product) {
@@ -78,7 +78,7 @@ export const POST = requireAdmin(async (req) => {
     }
     //upload image to cloudinary
     
-    if (!imageFile || !(imageFile instanceof File)) {
+    if (!imageFile ) {
       return apiResponse({
         success: false,
         statusCode: 400,

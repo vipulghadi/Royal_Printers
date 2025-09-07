@@ -17,7 +17,11 @@ const updateProductSchema = z.object({
 
 async function objectExist(id) {
   const product = await prisma.Product.findUnique({
-    where: { id, isDeleted: false },
+    where: { id, },
+    include: {
+        category: true,
+        attributes: true,
+    },
   });
   return product;
 }
@@ -74,7 +78,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
 
     // Check if the product with the same name already exists
     const existingProduct = await prisma.Product.findFirst({
-      where: { ...parsedData, isDeleted: false },
+      where: { ...parsedData,  },
     });
 
     if (existingProduct) {
@@ -136,9 +140,9 @@ export const DELETE = requireAdmin(async (req, { params }) => {
         }
     
         // Soft delete the product
-        await prisma.Product.update({
+        await prisma.Product.dalete({
         where: { id: parseInt(id) },
-        data: { isDeleted: true },
+    
         });
     
         return apiResponse({

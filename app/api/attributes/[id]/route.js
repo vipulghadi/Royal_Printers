@@ -15,7 +15,7 @@ const updateAttributeSchema = z.object({
 
 async function objectExist(id){
     const attribute = await prisma.Attribute.findUnique({
-        where: { id, isDeleted: false },
+        where: { id },
     });
     return attribute;
 }
@@ -70,7 +70,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
     
         // check if the new name already exists
         const existingAttribute = await prisma.attribute.findFirst({
-        where: { name:data.name, isDeleted: false, isActive: true },
+        where: { name:data.name, isActive: true },
         });
     
         if (existingAttribute && existingAttribute.id !== parseInt(id)) {
@@ -119,9 +119,9 @@ export const DELETE = requireAdmin(async (req, { params }) => {
         }
 
         // Soft delete the attribute
-        const deletedAttribute = await prisma.attribute.update({
+        const deletedAttribute = await prisma.Attribute.delete({
             where: { id: parseInt(id) },
-            data: { isDeleted: true, isActive: false },
+        
         });
 
         return apiResponse({
@@ -131,6 +131,8 @@ export const DELETE = requireAdmin(async (req, { params }) => {
             success: true,
         });
     } catch (error) {
+        console.log(error);
+        
         return apiResponse({
             success: false,
             statusCode: 500,
@@ -158,7 +160,7 @@ export const PATCH = requireAdmin(async (req) => {
 
         // Check if the attribute exists
         const existingAttribute = await prisma.attribute.findFirst({
-            where: { data, isDeleted: false, isActive: true },
+            where: { data, isActive: true },
         });
 
         if (!existingAttribute) {

@@ -1,8 +1,15 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Package, Users, ShoppingCart, Star, TrendingUp, DollarSign } from "lucide-react"
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Package,
+  Users,
+  ShoppingCart,
+  Star,
+  TrendingUp,
+  DollarSign,
+} from "lucide-react";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -12,7 +19,7 @@ export default function AdminDashboard() {
     totalReviews: 0,
     revenue: 0,
     avgRating: 0,
-  })
+  });
 
   useEffect(() => {
     // Simulate fetching dashboard stats
@@ -23,8 +30,8 @@ export default function AdminDashboard() {
       totalReviews: 67,
       revenue: 45600,
       avgRating: 4.3,
-    })
-  }, [])
+    });
+  }, []);
 
   const statCards = [
     {
@@ -63,20 +70,24 @@ export default function AdminDashboard() {
       icon: TrendingUp,
       color: "text-pink-600",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome to Royal Printers Admin Panel</p>
+        <p className="text-muted-foreground">
+          Welcome to Royal Printers Admin Panel
+        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {statCards.map((stat) => (
           <Card key={stat.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                {stat.title}
+              </CardTitle>
               <stat.icon className={`h-4 w-4 ${stat.color}`} />
             </CardHeader>
             <CardContent>
@@ -132,5 +143,5 @@ export default function AdminDashboard() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

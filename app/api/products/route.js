@@ -12,7 +12,7 @@ const createProductSchema = z.object({
   categoryId: z.number({
     required_error: "Category ID is required",
     invalid_type_error: "Category ID must be a number",
-  }).int({ message: "Category ID must be an integer" }).positive({ message: "Category ID must be positive" }),      
+  }).int({ message: "Category ID must be an integer" }).positive({ message: "Category ID must be positive" }).optional(),     
 });
 
 
@@ -25,8 +25,17 @@ export const GET = async (req) => {
     const result = await paginator(
       prisma.Product,
       {
-        where: { isDeleted: false, isActive: true },
+        where: {  isActive: true },
         orderBy: { createdAt: "desc" },
+        include: {
+          category: true,
+          images: {
+            where: { isActive: true },
+            orderBy: { createdAt: "desc" },
+            take: 1,
+          },
+        },
+        
       },
       page,
       limit
@@ -34,16 +43,16 @@ export const GET = async (req) => {
 
     return apiResponse({
       data: result,
-      message: "Attributes fetched successfully",
+      message: "products fetched successfully",
       statusCode: 200,
       success: true,
     });
   } catch (error) {
-    console.error("Error fetching attributes:", error);
+    console.error("Error fetching products:", error);
     return apiResponse({
       success: false,
       statusCode: 500,
-      message: "Failed to fetch attributes",
+      message: "Failed to fetch products",
       data: null,
     });
   }

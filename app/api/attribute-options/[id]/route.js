@@ -17,7 +17,7 @@ const updateAttributeOptionSchema = z.object({
 
 async function objectExist(id) {
   const attributeOption = await prisma.attributeOption.findUnique({
-    where: { id, isDeleted: false },
+    where: { id },
   });
   return attributeOption;
 }
@@ -131,9 +131,8 @@ export const DELETE = requireAdmin(async (req, { params }) => {
             });
         }
 
-        await prisma.attributeOption.update({
+        await prisma.AttributeOption.delete({
             where: { id: parseInt(id) },
-            data: { isDeleted: true },
         });
 
         return apiResponse({

@@ -6,8 +6,15 @@ import { z } from "zod";
 
 export const GET=async (req)=>{
     try {
+        const { searchParams } = new URL(req.url);
+        const isActive = searchParams.get("isActive")? searchParams.get("isActive") === "true" : true;
+        const includeOptions = searchParams.get("includeOptions") ? searchParams.get("includeOptions") === "true" : false;
+
+    
+        
         const attributes = await prisma.attribute.findMany({
-        where: { isDeleted: false, isActive: true },
+        where: { isActive: isActive },
+        include: includeOptions ? { options: { where: { isActive: true } } } : false,
         orderBy: { createdAt: "desc" },
         });
     
@@ -18,6 +25,7 @@ export const GET=async (req)=>{
         success: true,
         });
     } catch (error) {
+        console.error("Error fetching attributes:", error);
         return apiResponse({
         success: false,
         statusCode: 500,
@@ -36,7 +44,7 @@ export const POST = requireAdmin(async (req) => {
     
 // check allready exists
     const existingAttribute = await prisma.attribute.findFirst({
-      where: { name, isDeleted: false, isActive: true },
+      where: { name, isActive: true },
     });
 
     if (existingAttribute) {
@@ -53,7 +61,7 @@ export const POST = requireAdmin(async (req) => {
       data: {
         name,
         isActive: true,
-        isDeleted: false,
+        
       },
     });
 

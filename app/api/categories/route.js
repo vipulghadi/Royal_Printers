@@ -7,11 +7,7 @@ import { requireAdmin } from "@/lib/auth";
 import { generateSlug } from "@/lib/utils";
 import { apiResponse } from "@/lib/apiResponse";
 
-const updateSchema = z.object({
-  name: z.string().min(1).max(100).optional(),
-  slug: z.string().min(1).max(200).optional(),
-  imageUrl: z.string().max(2048).url().nullable().optional(),
-});
+
 
 export async function GET(req) {
   try {
@@ -20,12 +16,20 @@ export async function GET(req) {
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
 
-    const categories = await prisma.category.findMany({
-      where: { isDeleted: false, isActive: true },
-      skip,
-      take: limit,
+const categories = await prisma.Category.findMany({
+
+  include: {
+    images: {
+      where: {  isActive: true },
       orderBy: { createdAt: "desc" },
-    });
+      take: 1, 
+    }
+  },
+  skip,
+  take: limit,
+  orderBy: { createdAt: "desc" },
+});
+
 
     return apiResponse({
       data: categories,
@@ -34,6 +38,7 @@ export async function GET(req) {
       success: true,
     });
   } catch (error) {
+    console.error("Error fetching categories:", error);
     return apiResponse({
       success: false,
       statusCode: 500,
@@ -45,11 +50,11 @@ export async function GET(req) {
 
 export const POST = requireAdmin(async (req) => {
   try {
-    console.log("Content-Type:", req.headers.get("content-type"));
-    const data =  await req.formData();
-    const name = data.get("name")?.toString().trim();
-    const slug = data.get("slug")?.toString().trim() || generateSlug(name);
-    const imageFile = data.get("imageFile");
+    
+    const data =  await req.json();
+    const {name} = data;
+    
+
 
     if (!name) {
      return apiResponse({
@@ -60,18 +65,11 @@ export const POST = requireAdmin(async (req) => {
     })
 }
 
-    if (!imageFile) {
-     return apiResponse({
-        success: false,
-        statusCode: 400,
-        message: "Invalid image file",
-        data: null,
-      });
-    }
+
 
     //check if category already exists
     const existingCategory = await prisma.category.findFirst({
-      where: { name, isDeleted: false, isActive: true },
+      where: { name },
     });
     if (existingCategory) {
      return apiResponse({
@@ -83,15 +81,9 @@ export const POST = requireAdmin(async (req) => {
     }
 
 
-    //upload image url
-    let imageUrl = null;
-    const fileBuffer = await imageFile.arrayBuffer();
-    const mimetype = imageFile.type;
-    const folder = "categories";
-    imageUrl = await uploadImage(Buffer.from(fileBuffer), mimetype, folder);
-
+    const slug = generateSlug(name);
     const category = await prisma.category.create({
-      data: { name, imageUrl, slug },
+      data: { name, slug },
     });
 
     return apiResponse({

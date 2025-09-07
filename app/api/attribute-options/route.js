@@ -1,29 +1,28 @@
 import { apiResponse } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { z } from "zod";
+import { includes, z } from "zod";
 
 const createAttributeOptionSchema = z.object({
-  value: z.string().min(3, { message: "Name is required" }),
+  value: z.string().min(1, { message: "Name is required" }),
   attributeId: z.number({
       required_error: "Attribute ID is required",
       invalid_type_error: "Attribute ID must be a number",
     })
     .int({ message: "Attribute ID must be an integer" })
     .positive({ message: "Attribute ID must be positive" }),
+    isActive: z.boolean()
 });
 
-// async function objectExist(id) {
-//   const attributeOption = await prisma.attributeOption.findUnique({
-//     where: { id, isDeleted: false },
-//   });
-//     return attributeOption;
-// }
+
 
 export const GET = async (req) => {
   try {
-    const attributes = await prisma.attributeOption.findMany({
-      where: { isDeleted: false, isActive: true },
+    const attributes = await prisma.AttributeOption.findMany({
+      where: {  isActive: true },
+      include:{
+        attribute: true
+      },
       orderBy: { createdAt: "desc" },
     });
 
@@ -34,6 +33,7 @@ export const GET = async (req) => {
       success: true,
     });
   } catch (error) {
+    console.error("Error fetching attributes:", error);
     return apiResponse({
       success: false,
       statusCode: 500,
@@ -51,7 +51,7 @@ export const POST = requireAdmin(async (req) => {
 
     // Check if the attribute option already exists
     const existingAttributeOption = await prisma.AttributeOption.findFirst({
-      where: { value: parsedData.value, isDeleted: false,attributeId: parsedData.attributeId },
+      where: { value: parsedData.value,attributeId: parsedData.attributeId },
     });
 
     if (existingAttributeOption) {
@@ -68,7 +68,7 @@ export const POST = requireAdmin(async (req) => {
         value: parsedData.value,
         attributeId: parsedData.attributeId,
         isActive: true,
-        isDeleted: false,
+    
       },
     });
 

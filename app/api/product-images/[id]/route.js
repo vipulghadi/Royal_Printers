@@ -11,7 +11,7 @@ export const DELETE = requireAdmin(async (req, { params }) => {
         const { id } = await params;
     
         const productImage = await prisma.productImage.findUnique({
-        where: { id: parseInt(id), isDeleted: false },
+        where: { id: parseInt(id)},
         });
     
         if (!productImage) {
@@ -23,7 +23,7 @@ export const DELETE = requireAdmin(async (req, { params }) => {
         });
         }
     
-        // Soft delete the product image
+
         await prisma.productImage.delete({
         where: { id: parseInt(id) },
         

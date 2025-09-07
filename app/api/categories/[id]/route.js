@@ -15,7 +15,7 @@ export const GET = requireAdmin(async (req, { params }) => {
   try {
     const { id } = params;
     const category = await prisma.category.findUnique({
-      where: { id: parseInt(id, 10), isDeleted: false },
+      where: { id: parseInt(id, 10) },
     });
 
     if (!category) {
@@ -45,9 +45,9 @@ export const GET = requireAdmin(async (req, { params }) => {
 
 export const DELETE=requireAdmin(async (req, { params }) => {
 try{
-    const {id}=params;
+    const {id}=await params;
     const category=await prisma.category.findUnique({
-        where: { id: parseInt(id, 10), isDeleted: false },
+        where: { id: parseInt(id, 10) },
     })
 
       if (!category) {
@@ -59,9 +59,9 @@ try{
         });
         }
 
-        await prisma.category.update({
+        await prisma.category.delete({
         where: { id: parseInt(id, 10) },
-        data: { isDeleted: true },
+        
         });
 
         return apiResponse({
@@ -86,12 +86,12 @@ catch(error){
 export const PUT = requireAdmin(async (req, { params }) => {
   try {
     const { id } = params;
-    const data = await req.formData();
-
+    const data = await req.json();
+    
     // Get fields from formData
     const rawData = {
-      name: data.get("name")?.toString().trim(),
-     
+      name: data.name,
+        isActive: data.isActive,
     };
 
     // Zod validation
@@ -106,11 +106,11 @@ export const PUT = requireAdmin(async (req, { params }) => {
     }
 
     const { name,isActive} = parsed.data;
-    const imageFile = data.get("imageFile");
+    
 
     // Check if category exists
     const existingCategory = await prisma.category.findUnique({
-      where: { id: parseInt(id, 10), isDeleted: false },
+      where: { id: parseInt(id, 10) },
     });
 
     if (!existingCategory) {
@@ -128,7 +128,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
       data: {
         name,
         slug:  generateSlug(name),
-        imageUrl: imageFile ? await uploadImage(imageFile) : existingCategory.imageUrl,
+    
         isActive: isActive ?? existingCategory.isActive,
       },
     });
