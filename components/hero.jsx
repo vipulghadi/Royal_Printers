@@ -1,35 +1,38 @@
 "use client"
-import idCard from "@/public/id_card.png";
-import Image from "next/image";
-import BrochureCard from "@/public/brochures.png";
-import tshirtCard from "@/public/tshirts.png";
+
+import Image from "next/image"
+
+import { Button } from "@/components/ui/button"
+
 export default function Hero() {
   return (
-    <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-slate-100">
-            {/* Floating Product Images */}
-            <div className="absolute h-full w-full ">
-            
-             <Image src={idCard} alt="ID Card" className="w-80 h-80 " />
-            
- <Image src={tshirtCard} alt="ID Card" className="absolute bottom-[-100px] right-[-150px] " />
-
-    
-            </div>
-
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="text-center">
-          <div className="max-w-4xl mx-auto relative">
-            <h2 className="text-5xl md:text-7xl font-bold text-slate-900 mb-8 leading-tight">
-We Don’t Just Print, We Make You Shine
-            </h2>
-
-
-
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              From corporate branding to personal gifts, we've got you covered with our comprehensive printing services.
-            </p>
-          </div>
+    <section className="h-[90vh] sm:h-[80vh] w-full bg-[#f46817] rounded-2xl flex flex-col md:flex-row items-center justify-between px-6 md:px-12 py-10 md:py-16 overflow-hidden">
+      
+      {/* Left side: Text */}
+      <div className="flex flex-col gap-6 text-white max-w-xl">
+        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+          Print Smarter with <span className="text-yellow-300">Royal Printers</span>
+        </h1>
+        <p className="text-lg md:text-xl text-white/90">
+          High-quality printing for your business, events, and personal needs. 
+          Fast delivery, premium materials, and unbeatable prices.
+        </p>
+        <div>
+          <Button size="lg" className="bg-white text-[#f46817] font-semibold hover:bg-white/90">
+            Get Started
+          </Button>
         </div>
+      </div>
+
+      {/* Right side: Image */}
+      <div className="mt-10 md:mt-0 md:ml-10 flex justify-center">
+        <Image
+          src="/heroImage.png" // 
+          alt="Printing illustration"
+          width={550}
+          height={550}
+          className="w-full max-w-sm md:max-w-md object-contain overflow-hidden"
+        />
       </div>
     </section>
   )

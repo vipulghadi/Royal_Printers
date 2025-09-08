@@ -54,79 +54,69 @@ export default function Header() {
   }
 
   return (
-    <header className="border-b bg-white sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 h-20 flex items-center gap-3">
-        {/* Mobile menu trigger */}
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu">
-                <Menu className="w-6 h-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-[85vw] sm:w-[360px]">
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <Printer className="w-6 h-6" />
-                  <span className="text-xl font-semibold">Royal Printers</span>
-                </SheetTitle>
-              </SheetHeader>
-              <div className="mt-4">
-                <form onSubmit={onSearch} className="flex gap-2">
-                  <div className="relative w-full">
-                    <Search className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      value={q}
-                      onChange={(e) => setQ(e.target.value)}
-                      placeholder="Search products..."
-                      className="pl-8 h-11"
-                    />
-                  </div>
-                  <Button type="submit" className="h-11">
-                    Search
-                  </Button>
-                </form>
-              </div>
-              <div className="mt-4">
-                <MobileNav />
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+<header className="bg-white sticky   w-full  overflow-x-hidden">
+  <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+    {/* Left: Logo */}
+    <Link href="/" className="flex items-center gap-2 font-bold text-xl md:text-2xl">
+      <Printer className="w-6 h-6" />
+      <span>Royal Printers</span>
+    </Link>
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl md:text-2xl">
-          <Printer className="w-6 h-6" />
-          <span>Royal Printers</span>
-        </Link>
+    {/* Middle: Nav Links */}
+    <nav className="hidden md:flex items-center gap-6 font-semibold">
+      <NavLink href="/" label="Home" />
+      <NavLink href="/products" label="Products" />
+      <NavLink href="/about" label="About" />
+      <NavLink href="/contact" label="Contact" />
+      <NavLink href="/faqs" label="FAQs" />
+    </nav>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-3 ml-2">
-          <NavLink href="/" label="Home" />
-          <NavLink href="/products" label="Products" />
-          <NavLink href="/about" label="About" />
-          <NavLink href="/contact" label="Contact" />
-          <NavLink href="/faqs" label="FAQs" />
-        </nav>
+    {/* Right: Search Icon (Desktop) */}
+    <div className="hidden md:flex items-center">
+      <Button variant="ghost" size="icon" aria-label="Search">
+        <Search className="w-6 h-6" />
+      </Button>
+    </div>
 
-        {/* Search (desktop) */}
-        <form onSubmit={onSearch} className="ml-auto flex-1 max-w-lg hidden sm:flex items-center gap-2">
-          <div className="relative w-full">
-            <Search className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search products..."
-              className="pl-8 h-11 text-base"
-            />
-          </div>
-          <Button type="submit" className="h-11 text-base">
-            Search
+    {/* Mobile menu trigger */}
+    <div className="md:hidden">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="ghost" size="icon" aria-label="Open menu">
+            <Menu className="w-6 h-6" />
           </Button>
-        </form>
+        </SheetTrigger>
+        <SheetContent side="left" className="w-[85vw] sm:w-[360px]">
+          <SheetHeader>
+            <SheetTitle className="flex items-center gap-2">
+              <Printer className="w-6 h-6" />
+              <span className="text-xl font-semibold">Royal Printers</span>
+            </SheetTitle>
+          </SheetHeader>
+          <div className="mt-4">
+            <form onSubmit={onSearch} className="flex gap-2">
+              <div className="relative w-full">
+                <Search className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Search products..."
+                  className="pl-8 h-11"
+                />
+              </div>
+              <Button type="submit" className="h-11">
+                Search
+              </Button>
+            </form>
+          </div>
+          <div className="mt-4">
+            <MobileNav />
+          </div>
+        </SheetContent>
+      </Sheet>
+    </div>
+  </div>
+</header>
 
-
-      </div>
-    </header>
   )
 }

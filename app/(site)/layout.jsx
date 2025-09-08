@@ -5,13 +5,18 @@ import Footer from "@/components/footer"
 
 export default function SiteLayout({ children }) {
   return (
-
-      <div className="min-h-svh flex flex-col bg-background text-foreground">
+    <div className="flex flex-col min-h-screen overflow-x-hidden ">
+      {/* Shared container for all content */}
+      <div className="flex flex-col flex-1 w-full max-w-7xl mx-auto px-3">
         <Header />
-        <main className="flex-1">{children}</main>
+        
+        {/* Main content */}
+        <main className="flex-1 flex flex-col">
+          {children}
+        </main>
+        
         <Footer />
       </div>
- 
-
+    </div>
   )
 }
