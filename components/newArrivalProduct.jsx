@@ -1,5 +1,6 @@
 import React from "react"
 import { Button } from "./ui/button"
+import ProductCard from "./productCard"
 
 const products = [
   {
@@ -39,20 +40,7 @@ function NewArrivalProduct() {
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6 gap-3">
         {products.map((product) => (
-          <div
-            key={product.id}
-            className=" overflow-hidden   transition"
-          >
-            <img
-              src={product.img}
-              alt={product.name}
-              className="w-full sm:h-80 h-40 object-cover rounded-2xl"
-            />
-            <div className="p-3 flex flex-col justify-between">
-              <h3 className="text-sm font-semibold">{product.name}</h3>
-              <p className="text-gray-600 mt-1">{product.price}</p>
-            </div>
-          </div>
+<ProductCard product={product}     key={product.id}/>
         ))}
       </div>
     </section>

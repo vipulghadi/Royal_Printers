@@ -10,6 +10,7 @@ import PopularServiceSection from "@/components/PopularServiceSection";
 import ProductCategorySection from "@/components/productCategorySection";
 import ProductSection from "@/components/productSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import CustomCarousel from "@/components/customCarousal";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
@@ -19,11 +20,11 @@ export default function HomePage() {
     <div className="w-auto">
       <Hero />
       <HomeMarqueeProduct />
-      <NewArrivalProduct />
+<NewArrivalProduct/>
       <PopularServiceSection />
-      <ProductCategorySection />
-
-      <ProductSection />
+ <ProductSection/>
+    
+     
       <WhyChooseUsSection/>
     </div>
   );
