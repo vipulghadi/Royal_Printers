@@ -31,10 +31,10 @@ const products = [
 
 function NewArrivalProduct() {
   return (
-    <section className="w-full py-10 border-b  mb-5">
-    <div className="flex justify-between items-center mb-3">
-    <h2 className="text-2xl font-bold mb-6 text-center">New Arrivals</h2>
-    <Button>Explore</Button>
+    <section className="w-full py-10 border-b  mb-10">
+    <div className="flex justify-center items-center mb-3">
+    <h2 className="text-3xl font-bold mb-6 text-center">New Arrivals</h2>
+
         
     </div>
       
@@ -43,6 +43,10 @@ function NewArrivalProduct() {
 <ProductCard product={product}     key={product.id}/>
         ))}
       </div>
+      <div className="w-full flex justify-center items-center">
+          <button className="mx-auto rounded-2xl px-4 py-3 bg-black">Explore</button>
+      </div>
+        
     </section>
   )
 }

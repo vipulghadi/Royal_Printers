@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { Star, ShoppingCart, MessageCircle, CreditCard } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import CustomCarousel from "@/components/customCarousal"
+import MultipleCarousel from "@/components/carousels/multcardCarousel"
 
 // Dummy data (replace with API data)
-const product = {
+const products = {
   id: 1,
   name: "Premium Running Shoes",
   description:
@@ -21,7 +23,7 @@ const product = {
 }
 
 export default function ProductPage() {
-  const [selectedImg, setSelectedImg] = useState(product.images[0])
+  const [selectedImg, setSelectedImg] = useState(products.images[0])
 
   return (
     <div className="max-w-7xl mx-auto mt-5">
@@ -31,7 +33,7 @@ export default function ProductPage() {
         <div className="flex flex-col md:flex-row gap-4">
           {/* Thumbnails - LEFT on big screens */}
           <div className="hidden md:flex flex-col gap-3 overflow-y-auto max-h-[80vh]">
-            {product.images.map((img, i) => (
+            {products.images.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setSelectedImg(img)}
@@ -52,14 +54,14 @@ export default function ProductPage() {
           <div className="flex-1 flex items-center justify-center bg-gray-100 rounded-2xl">
             <img
               src={selectedImg}
-              alt={product.name}
+              alt={products.name}
               className="object-contain w-full h-full max-h-[80vh] rounded-2xl"
             />
           </div>
 
           {/* Thumbnails - BELOW on small screens */}
           <div className="flex md:hidden gap-3 mt-4 overflow-x-auto w-full justify-center">
-            {product.images.map((img, i) => (
+            {products.images.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setSelectedImg(img)}
@@ -80,9 +82,9 @@ export default function ProductPage() {
         {/* Right: Product Details */}
         <div className="flex flex-col items-start">
           <h1 className="text-2xl md:text-3xl font-bold mb-2">
-            {product.name}
+            {products.name}
           </h1>
-          <p className="text-muted-foreground mb-4">{product.description}</p>
+          <p className="text-muted-foreground mb-4">{products.description}</p>
 
           {/* Rating */}
           <div className="flex items-center mb-3">
@@ -90,19 +92,19 @@ export default function ProductPage() {
               <Star
                 key={i}
                 className={`h-5 w-5 ${
-                  i < Math.floor(product.rating)
+                  i < Math.floor(products.rating)
                     ? "fill-yellow-400 text-yellow-400"
                     : "text-gray-300"
                 }`}
               />
             ))}
             <span className="ml-2 text-sm text-gray-600">
-              {product.rating} / 5
+              {products.rating} / 5
             </span>
           </div>
 
           {/* Price */}
-          <div className="text-3xl font-bold mb-6">₹{product.price}</div>
+          <div className="text-3xl font-bold mb-6">₹{products.price}</div>
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 w-full">
@@ -114,7 +116,7 @@ export default function ProductPage() {
 
             {/* WhatsApp Message */}
             <a
-              href={`https://wa.me/919876543210?text=Hello,%20I%20am%20interested%20in%20${product.name}`}
+              href={`https://wa.me/919876543210?text=Hello,%20I%20am%20interested%20in%20${products.name}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1"
@@ -139,6 +141,11 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
+
+      <div className="w-full">
+        <MultipleCarousel/>
+      </div>
+
     </div>
   )
 }
