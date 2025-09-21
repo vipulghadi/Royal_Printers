@@ -13,7 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 function MobileNav() {
   return (
@@ -21,29 +21,17 @@ function MobileNav() {
       <Link href="/" className="px-2 py-2 rounded-md hover:bg-muted text-base">
         Home
       </Link>
-      <Link
-        href="/products"
-        className="px-2 py-2 rounded-md hover:bg-muted text-base"
-      >
+      <Link href="/products" className="px-2 py-2 rounded-md hover:bg-muted text-base">
         Products
       </Link>
-      <Link
-        href="/about"
-        className="px-2 py-2 rounded-md hover:bg-muted text-base"
-      >
+      <Link href="/about-us" className="px-2 py-2 rounded-md hover:bg-muted text-base">
         About
       </Link>
-      <Link
-        href="/contact"
-        className="px-2 py-2 rounded-md hover:bg-muted text-base"
-      >
+      <Link href="/contact-us" className="px-2 py-2 rounded-md hover:bg-muted text-base">
         Contact
       </Link>
-      <Link
-        href="/faqs"
-        className="px-2 py-2 rounded-md hover:bg-muted text-base"
-      >
-        FAQs
+      <Link href="/our-stories" className="px-2 py-2 rounded-md hover:bg-muted text-base">
+        Our Stories
       </Link>
     </div>
   )
@@ -53,6 +41,16 @@ export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
   const [q, setQ] = useState("")
+  const [scrolled, setScrolled] = useState(false)
+
+  // 🔥 Detect scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const onSearch = (e) => {
     e.preventDefault()
@@ -78,30 +76,34 @@ export default function Header() {
   return (
     <>
       {/* Fixed Header */}
-      <header className="bg-white fixed top-0 left-0 right-0 z-50 w-full ">
-        <div className="max-w-7xl mx-auto px-10 h-20 flex items-center justify-between">
+      <header
+        className={` bg-white fixed top-0 left-0 right-0 z-50 w-full transition-all ${
+          scrolled ? " shadow-md" : "bg-white"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           {/* Left: Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 font-bold text-xl md:text-2xl"
           >
-            <Printer className="w-6 h-6" />
-            <span>Royal Printers</span>
+            <Printer className="w-6 h-6 text-orange-500" />
+            <span className="text-orange-500">Royal Printers</span>
           </Link>
 
           {/* Middle: Nav Links (Desktop) */}
           <nav className="hidden md:flex items-center gap-6 font-semibold">
             <NavLink href="/" label="Home" />
             <NavLink href="/products" label="Products" />
-            <NavLink href="/about" label="About" />
-            <NavLink href="/contact" label="Contact" />
-            <NavLink href="/faqs" label="FAQs" />
+            <NavLink href="/about-us" label="About" />
+            <NavLink href="/contact-us" label="Contact" />
+            <NavLink href="/our-stories" label="Our Stories" />
           </nav>
 
           {/* Right: Search Icon (Desktop) */}
           <div className="hidden md:flex items-center">
             <Button variant="ghost" size="icon" aria-label="Search">
-              <Search className="w-6 h-6" />
+              <Search className="w-12 h-12" />
             </Button>
           </div>
 
@@ -110,24 +112,24 @@ export default function Header() {
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" aria-label="Open menu">
-                  <Menu className="w-6 h-6" />
+                  <Menu className="w-12 h-12" />
                 </Button>
               </SheetTrigger>
               <SheetContent
                 side="left"
-                className="w-[85vw] sm:w-[360px] overflow-y-auto"
+                className="w-[100vw] overflow-y-auto"
               >
                 <SheetHeader>
                   <SheetTitle className="flex items-center gap-2">
-                    <Printer className="w-6 h-6" />
-                    <span className="text-xl font-semibold">
+                    <Printer className="w-6 h-6 text-orange-500" />
+                    <span className="text-xl font-semibold text-orange-500">
                       Royal Printers
                     </span>
                   </SheetTitle>
                 </SheetHeader>
 
                 {/* Search Form */}
-                <div className="mt-4">
+                <div className="mt-4 p-4">
                   <form onSubmit={onSearch} className="flex gap-2">
                     <div className="relative w-full">
                       <Search className="w-4 h-4 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
@@ -145,7 +147,7 @@ export default function Header() {
                 </div>
 
                 {/* Mobile Nav Links */}
-                <div className="mt-4">
+                <div className="mt-4 p-4">
                   <MobileNav />
                 </div>
               </SheetContent>

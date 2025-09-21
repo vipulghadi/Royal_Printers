@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Star, ShoppingCart, MessageCircle, CreditCard } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import CustomCarousel from "@/components/customCarousal"
-import MultipleCarousel from "@/components/carousels/multcardCarousel"
+import { useState } from "react";
+import { Star, ShoppingCart, MessageCircle, CreditCard } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import RecommndedProducts from "@/components/recommndedProducts";
 
-// Dummy data (replace with API data)
+// Dummy data
 const products = {
   id: 1,
   name: "Premium Running Shoes",
@@ -20,74 +19,53 @@ const products = {
     "https://d1fufvy4xao6k9.cloudfront.net/images/landings/43/shirts-mob-1.jpg",
     "https://campussutra.com/cdn/shop/files/CSMSSRT6078_1_ad9219ef-869d-44b2-9dd2-5876b06cc708.webp?v=1713879728",
   ],
-}
+};
 
 export default function ProductPage() {
-  const [selectedImg, setSelectedImg] = useState(products.images[0])
+  const [selectedImg, setSelectedImg] = useState(products.images[0]);
 
   return (
-    <div className="max-w-7xl mx-auto mt-5">
+    <div className="w-full mt-5">
       {/* Product Section */}
-      <div className="grid md:grid-cols-2 gap-10 sm:h-[80vh]">
-        {/* Left: Product Images */}
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Thumbnails - LEFT on big screens */}
-          <div className="hidden md:flex flex-col gap-3 overflow-y-auto max-h-[80vh]">
-            {products.images.map((img, i) => (
-              <button
-                key={i}
-                onClick={() => setSelectedImg(img)}
-                className={`h-20 w-20 rounded-xl border overflow-hidden flex items-center justify-center ${
-                  selectedImg === img ? "ring-2 ring-black" : ""
-                }`}
-              >
-                <img
-                  src={img}
-                  alt="thumb"
-                  className="object-contain h-full w-full"
-                />
-              </button>
-            ))}
-          </div>
-
+      <div className="flex flex-col md:flex-row gap-8 md:h-[80vh]">
+        {/* Left: Image Section */}
+        <div className="flex md:flex-row flex-col gap-4 md:w-1/2">
           {/* Main Image */}
-          <div className="flex-1 flex items-center justify-center bg-gray-100 rounded-2xl">
+          <div className="w-full md:w-4/5 h-96 md:h-[80vh] bg-gray-100 overflow-hidden rounded-2xl">
             <img
               src={selectedImg}
               alt={products.name}
-              className="object-contain w-full h-full max-h-[80vh] rounded-2xl"
+              className="w-full h-full object-contain rounded-2xl"
             />
           </div>
 
-          {/* Thumbnails - BELOW on small screens */}
-          <div className="flex md:hidden gap-3 mt-4 overflow-x-auto w-full justify-center">
+          {/* Thumbnails */}
+          <div className="flex md:flex-col flex-row gap-3 overflow-x-auto lg:overflow-x-hidden md:overflow-y-auto md:w-1/5">
             {products.images.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setSelectedImg(img)}
-                className={`h-20 w-20 rounded-xl border overflow-hidden flex items-center justify-center flex-shrink-0 ${
+                className={`flex-shrink-0 h-20 w-20 md:h-24 md:w-24 rounded-xl border overflow-hidden flex items-center justify-center ${
                   selectedImg === img ? "ring-2 ring-black" : ""
                 }`}
               >
-                <img
-                  src={img}
-                  alt="thumb"
-                  className="object-contain h-full w-full"
-                />
+                <img src={img} alt="thumb" className="object-cover h-full w-full" />
               </button>
             ))}
           </div>
         </div>
 
         {/* Right: Product Details */}
-        <div className="flex flex-col items-start">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">
+        <div className="flex flex-col md:w-1/2 items-start mt-6 md:mt-0">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
             {products.name}
           </h1>
-          <p className="text-muted-foreground mb-4">{products.description}</p>
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-4 leading-relaxed">
+            {products.description}
+          </p>
 
           {/* Rating */}
-          <div className="flex items-center mb-3">
+          <div className="flex items-center mb-4">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
@@ -98,23 +76,22 @@ export default function ProductPage() {
                 }`}
               />
             ))}
-            <span className="ml-2 text-sm text-gray-600">
+            <span className="ml-2 text-sm sm:text-base text-gray-600">
               {products.rating} / 5
             </span>
           </div>
 
           {/* Price */}
-          <div className="text-3xl font-bold mb-6">₹{products.price}</div>
+          <div className="text-lg sm:text-2xl md:text-3xl font-bold mb-6">
+            ₹{products.price}
+          </div>
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 w-full">
-            {/* Add to Cart */}
-            <Button className="flex-1 flex items-center gap-2">
+            <Button className="flex-1 flex items-center gap-2 justify-center">
               <ShoppingCart className="w-5 h-5" />
               Add to Cart
             </Button>
-
-            {/* WhatsApp Message */}
             <a
               href={`https://wa.me/919876543210?text=Hello,%20I%20am%20interested%20in%20${products.name}`}
               target="_blank"
@@ -123,17 +100,15 @@ export default function ProductPage() {
             >
               <Button
                 variant="outline"
-                className="w-full flex items-center gap-2"
+                className="w-full flex items-center gap-2 justify-center"
               >
                 <MessageCircle className="w-5 h-5" />
                 WhatsApp
               </Button>
             </a>
-
-            {/* Buy Now */}
             <Button
               variant="secondary"
-              className="flex-1 flex items-center gap-2"
+              className="flex-1 flex items-center gap-2 justify-center"
             >
               <CreditCard className="w-5 h-5" />
               Buy Now
@@ -142,10 +117,13 @@ export default function ProductPage() {
         </div>
       </div>
 
-      <div className="w-full">
-        <MultipleCarousel/>
+      {/* Recommended Products */}
+      <div className="mt-12 sm:mt-16">
+        <h1 className="font-semibold text-lg sm:text-2xl mb-3">
+          Recommended Products
+        </h1>
+        <RecommndedProducts productId={1} />
       </div>
-
     </div>
-  )
+  );
 }
