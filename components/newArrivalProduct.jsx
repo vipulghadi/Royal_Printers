@@ -43,9 +43,7 @@ function NewArrivalProduct() {
 <ProductCard product={product}     key={product.id}/>
         ))}
       </div>
-      <div className="w-full flex justify-center items-center">
-          <button className="mx-auto rounded-2xl px-4 py-3 bg-black">Explore</button>
-      </div>
+
         
     </section>
   )

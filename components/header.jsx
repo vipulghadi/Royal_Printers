@@ -59,7 +59,7 @@ export default function Header() {
         href={href}
         className={`text-base px-2 py-1 rounded-md ${
           active
-            ? "font-semibold text-black"
+            ? "font-semibold text-green-500"
             : "text-muted-foreground hover:text-foreground"
         }`}
       >
@@ -81,8 +81,8 @@ export default function Header() {
             href="/"
             className="flex items-center gap-2 font-bold text-xl md:text-2xl"
           >
-            <Printer className="w-6 h-6 text-orange-500" />
-            <span className="text-orange-500">Royal Printers</span>
+            <Printer className="w-6 h-6 text-green-500" />
+            <span className="">Royal Printers</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -96,8 +96,8 @@ export default function Header() {
 
           {/* Desktop Search */}
           <div className="hidden md:flex items-center">
-            <Button variant="ghost" size="icon" aria-label="Search">
-              <Search className="w-5 h-5" />
+            <Button variant="outline" className="bg-green-500 text-white hover:bg-gray-100 mr-4">
+              Contact Us
             </Button>
           </div>
 

@@ -7,10 +7,10 @@ import { Marquee } from "@/components/magicui/marquee";
 import { HomeMarqueeProduct, MarqueeDemo } from "@/components/homeMarquee";
 import NewArrivalProduct from "@/components/newArrivalProduct";
 import PopularServiceSection from "@/components/PopularServiceSection";
-import ProductCategorySection from "@/components/productCategorySection";
 import ProductSection from "@/components/productSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
-import CustomCarousel from "@/components/customCarousal";
+
+import PopularCategorySection from "@/components/popularCategorySection";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
@@ -22,6 +22,7 @@ export default function HomePage() {
       <HomeMarqueeProduct />
 <NewArrivalProduct/>
       <PopularServiceSection />
+      <PopularCategorySection/>
  <ProductSection/>
     
      

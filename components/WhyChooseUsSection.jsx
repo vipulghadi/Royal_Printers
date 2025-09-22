@@ -7,7 +7,7 @@ export default function WhyChooseUsSection() {
       <div className="max-w-7xl mx-auto px-6 text-center">
         {/* Section Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Why Choose <span className="text-orange-600">Royal Printers</span>?
+          Why Choose <span className="text-green-500">Royal Printers</span>?
         </h2>
         <p className="text-gray-600 max-w-3xl mx-auto mb-12">
           At Royal Printers, we combine <strong>affordable printing services</strong>,

@@ -2,39 +2,77 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { WordRotate } from "@/components/ui/word-rotate"
+import { DotPattern } from "@/components/ui/dot-pattern"
+import { cn } from "@/lib/utils"
 
 export default function Hero() {
   return (
-    <section className="sm:h-[80vh] w-full bg-[#f46817] rounded-2xl flex overflow-hidden flex-wrap">
-      {/* Left side: Text */}
-      <div className="h-[50vh] sm:h-full w-full sm:w-7/12 text-white flex flex-col justify-center items-start p-8">
-        <h1 className="text-4xl sm:text-6xl font-bold mb-4">
-          Print Smarter with <span className="text-black">Royal Printers</span>
+    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full min-h-[80vh] rounded-2xl overflow-hidden px-6 sm:px-12 py-10 bg-green-500">
+      {/* Dot Background */}
+      <DotPattern
+        className={cn(
+          "absolute inset-0 z-0",
+          "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)] opacity-30"
+        )}
+      />
+
+      {/* Left Side */}
+      <div className="relative z-10 w-full sm:w-1/2 flex flex-col items-start space-y-6">
+        {/* Small Rotating Heading */}
+        <h3 className="text-3xl font-medium uppercase tracking-wide">
+          <WordRotate
+            className="text-black inline-block"
+            words={["Printing", "Design", "Branding"]}
+          />
+        </h3>
+
+        {/* Main Heading */}
+        <h1 className="text-3xl sm:text-6xl font-bold leading-tight text-white">
+          Smarter Solutions for Your Ideas
         </h1>
-        <p className="text-lg sm:text-xl mb-6">
-          High-quality printing solutions tailored for your business & personal needs.
+
+        {/* Subheading */}
+        <p className="text-base sm:text-lg text-gray-100 max-w-md">
+          Royal Printers delivers custom printing services that help your brand
+          stand out — from business cards to banners, we print it all.
         </p>
-        <Button className="bg-black text-white hover:bg-gray-800">
-          Get Started
-        </Button>
+
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-4">
+          <Button className="bg-black text-white hover:bg-gray-800">
+            Explore
+          </Button>
+        
+          <Button variant="secondary" className="bg-orange-500 text-white hover:bg-orange-400">
+            Get Quote
+          </Button>
+        </div>
       </div>
 
-      {/* Right side: Image with responsive sizes */}
-      <div className="h-[30vh] sm:h-full w-full sm:w-5/12 flex justify-center items-center  ">
-        <Image
-          src="/heroImage.png"
-          alt="Printing illustration"
-          width={300}   // fallback
-          height={300}  // fallback
-          className="
-            w-[210%] h-[210%]      
-            sm:w-[270%] sm:h-[270%]  
-            md:w-96 md:h-96  /* 
-            lg:w-[650px] lg:h-[650px] 
-            object-contain
-            
-          "
-        />
+      {/* Right Side: Absolute Main Image with Floating Cards */}
+      <div className="relative z-10 w-full sm:w-1/2 h-[400px] mt-12 sm:mt-0">
+        {/* Absolute Main Image */}
+        <div className="absolute top-0 right-0 w-72 sm:w-96">
+          <Image
+            src="/heroImage.png"
+            alt="Royal Printers"
+            width={400}
+            height={400}
+            className="object-contain w-full h-full"
+          />
+
+          {/* Floating Cards */}
+          <div className="absolute top-5 left-0 bg-white shadow-lg rounded-xl p-3 text-sm font-medium text-gray-800">
+            Premium Quality
+          </div>
+          <div className="absolute bottom-10 right-4 bg-white shadow-lg rounded-xl p-3 text-sm font-medium text-gray-800">
+            Fast Delivery
+          </div>
+          <div className="absolute top-1/2 right-0 -translate-y-1/2 bg-white shadow-lg rounded-xl p-3 text-sm font-medium text-gray-800">
+            24/7 Support
+          </div>
+        </div>
       </div>
     </section>
   )

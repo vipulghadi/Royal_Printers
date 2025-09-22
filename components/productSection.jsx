@@ -57,8 +57,8 @@ function ProductSection() {
   return (
     <section className="w-full py-10   mb-5">
     <div className="flex justify-between items-center mb-3">
-    <h2 className="text-2xl font-bold mb-6 text-center">Products</h2>
-    <Button>Explore</Button>
+    <h2 className="text-3xl font-bold mb-6 text-center mx-auto">Products</h2>
+
         
     </div>
       
@@ -67,6 +67,10 @@ function ProductSection() {
  <ProductCard product={product} key={product.id}/>
         ))}
       </div>
+          <div className="flex justify-center mt-12 ">
+                  <Button className="cursor-pointer ">Explore more</Button>
+              </div>
+
     </section>
   )
 }

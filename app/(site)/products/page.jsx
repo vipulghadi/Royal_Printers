@@ -29,7 +29,7 @@ export default function ProductsPage() {
       <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-24">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-24">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
 <ProductCard product={product}/>

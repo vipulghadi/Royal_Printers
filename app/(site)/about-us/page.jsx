@@ -8,29 +8,13 @@ export default function AboutUs() {
   return (
     <div className="w-full flex flex-col gap-16 sm:mt-16 mt-2">
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-yellow-200 to-amber-400 rounded-xl p-8 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="md:w-1/2">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Welcome to Royal Printers</h1>
-          <p className="text-gray-700 text-base md:text-lg mb-6">
-            Your trusted partner in high-quality printing solutions. From business cards to large format posters, we bring your ideas to life with precision and style.
-          </p>
-          <Button className="bg-black text-white hover:bg-gray-800">Get in Touch</Button>
-        </div>
-        <div className="md:w-1/2">
-          <img
-            src="https://images.unsplash.com/photo-1581092795361-04a5ebd9dbd0?auto=format&fit=crop&w=800&q=80"
-            alt="Printing"
-            className="w-full h-64 md:h-80 object-cover rounded-xl shadow-lg"
-          />
-        </div>
-      </section>
+
 
       {/* Company Story */}
       <section className="flex flex-col md:flex-row items-center gap-8">
         <div className="md:w-1/2">
           <img
-            src="https://images.unsplash.com/photo-1599693244871-c1f4dbd39b23?auto=format&fit=crop&w=800&q=80"
+            src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcampaigns.sgs.com%2F-%2Fmedia%2Fglobal%2Fimages%2Fstructural-website-images%2Fasset-link-images%2Fcampaigns-images%2Fisolated-campaign-banners%2Fclient-stories-600px.png&f=1&nofb=1&ipt=33aa707d961f39aafd25599560d56c5d2b45df388fa559ca1af547dc69e15081"
             alt="Company Story"
             className="w-full h-64 md:h-80 object-cover rounded-xl shadow-md"
           />
@@ -95,22 +79,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="flex flex-col gap-6">
-        <h2 className="text-2xl md:text-3xl font-semibold text-center">What Our Clients Say</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {["John Doe", "Jane Smith", "Michael Lee"].map((client, i) => (
-            <Card key={i} className="p-4 hover:shadow-lg transition">
-              <CardContent>
-                <p className="text-gray-700 mb-3">
-                  "Royal Printers transformed our ideas into beautiful prints. Highly professional and reliable service!"
-                </p>
-                <p className="font-semibold">{client}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+
 
       {/* Call to Action */}
       <section className="bg-amber-200 p-8 rounded-xl text-center">
