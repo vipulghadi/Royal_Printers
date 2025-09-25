@@ -34,7 +34,7 @@ const ProductCard = ({ img, name, desc }) => {
   return (
     <div
       className={cn(
-        "relative w-40 flex-shrink-0 cursor-pointer overflow-hidden rounded-xl border p-1",
+        "relative w-32 flex-shrink-0 cursor-pointer overflow-hidden rounded-xl  p-1",
         // light styles
         "border-gray-200 bg-white hover:bg-gray-50",
         // dark styles

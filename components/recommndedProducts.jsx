@@ -42,7 +42,7 @@ function RecommendedProducts({ productId }) {
     <div className="w-full ">
       <Carousel opts={{ align: "start" }} className="w-full ">
         <CarouselContent>
-          {(loading ? Array.from({ length: 4 }) : products).map((item, index) => (
+          {(loading ? Array.from({ length: 5 }) : products).map((item, index) => (
             <CarouselItem key={item?.id || index} className="basis-1/2 md:basis-1/2 lg:basis-1/5 p-2">
               {loading ? <ProductSkeleton /> : <ProductCard product={item} />}
             </CarouselItem>

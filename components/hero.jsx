@@ -8,17 +8,11 @@ import { cn } from "@/lib/utils"
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full min-h-[80vh] rounded-2xl overflow-hidden px-6 sm:px-12 py-10 bg-green-500">
-      {/* Dot Background */}
-      <DotPattern
-        className={cn(
-          "absolute inset-0 z-0",
-          "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)] opacity-30"
-        )}
-      />
+    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full min-h-[80vh] rounded-2xl overflow-hidden  bg-green-500">
+
 
       {/* Left Side */}
-      <div className="relative z-10 w-full sm:w-1/2 flex flex-col items-start space-y-6">
+      <div className="relative z-10 w-full sm:w-1/2 flex flex-col items-start space-y-6 p-6">
         {/* Small Rotating Heading */}
         <h3 className="text-3xl font-medium uppercase tracking-wide">
           <WordRotate
@@ -51,28 +45,10 @@ export default function Hero() {
       </div>
 
       {/* Right Side: Absolute Main Image with Floating Cards */}
-      <div className="relative z-10 w-full sm:w-1/2 h-[400px] mt-12 sm:mt-0">
-        {/* Absolute Main Image */}
-        <div className="absolute top-0 right-0 w-72 sm:w-96">
-          <Image
-            src="/heroImage.png"
-            alt="Royal Printers"
-            width={400}
-            height={400}
-            className="object-contain w-full h-full"
-          />
-
-          {/* Floating Cards */}
-          <div className="absolute top-5 left-0 bg-white shadow-lg rounded-xl p-3 text-sm font-medium text-gray-800">
-            Premium Quality
-          </div>
-          <div className="absolute bottom-10 right-4 bg-white shadow-lg rounded-xl p-3 text-sm font-medium text-gray-800">
-            Fast Delivery
-          </div>
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 bg-white shadow-lg rounded-xl p-3 text-sm font-medium text-gray-800">
-            24/7 Support
-          </div>
-        </div>
+      <div className="relative z-10 w-full sm:w-1/2  h-[400px] sm:h-[500px] mt-12 sm:mt-0  flex items-center justify-center  overflow-hidden">
+      <img src="https://imagine-public.x.ai/imagine-public/images/6c7c485a-a89a-4d4b-8ac3-77c35d15cf54.png?cache=1" alt="" className="absolute "/>
+    
+        
       </div>
     </section>
   )

@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Star, ShoppingCart, MessageCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RecommndedProducts from "@/components/recommndedProducts";
+import ProductVariations from "@/components/productVariationsPricing";
 
-// Dummy data
+// Dummy product data
 const products = {
   id: 1,
   name: "Premium Running Shoes",
@@ -19,10 +20,25 @@ const products = {
     "https://d1fufvy4xao6k9.cloudfront.net/images/landings/43/shirts-mob-1.jpg",
     "https://campussutra.com/cdn/shop/files/CSMSSRT6078_1_ad9219ef-869d-44b2-9dd2-5876b06cc708.webp?v=1713879728",
   ],
+  variations: [
+    { id: 1, type: "Size", value: "Small", price: 4500 },
+    { id: 2, type: "Size", value: "Medium", price: 4800 },
+    { id: 3, type: "Size", value: "Large", price: 4999 },
+    { id: 4, type: "Color", value: "Red", price: 5000 },
+    { id: 5, type: "Color", value: "Black", price: 5100 },
+  ],
+  whatsappNumber: "919876543210",
 };
 
 export default function ProductPage() {
   const [selectedImg, setSelectedImg] = useState(products.images[0]);
+
+  // Group variations by type for display
+  const groupedVariations = products.variations.reduce((acc, v) => {
+    if (!acc[v.type]) acc[v.type] = [];
+    if (!acc[v.type].includes(v.value)) acc[v.type].push(v.value);
+    return acc;
+  }, {});
 
   return (
     <div className="w-full mt-5">
@@ -49,7 +65,11 @@ export default function ProductPage() {
                   selectedImg === img ? "ring-2 ring-black" : ""
                 }`}
               >
-                <img src={img} alt="thumb" className="object-cover h-full w-full" />
+                <img
+                  src={img}
+                  alt="thumb"
+                  className="object-cover h-full w-full"
+                />
               </button>
             ))}
           </div>
@@ -86,14 +106,24 @@ export default function ProductPage() {
             ₹{products.price}
           </div>
 
+          {/* Available Variations */}
+          <div className="mb-6 space-y-2">
+            {Object.entries(groupedVariations).map(([type, values]) => (
+              <div key={type}>
+                <span className="font-semibold">{type}: </span>
+                <span>{values.join(", ")}</span>
+              </div>
+            ))}
+          </div>
+
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full">
+          <div className="flex flex-col sm:flex-row gap-3 w-full mb-6">
             <Button className="flex-1 flex items-center gap-2 justify-center">
               <ShoppingCart className="w-5 h-5" />
               Add to Cart
             </Button>
             <a
-              href={`https://wa.me/919876543210?text=Hello,%20I%20am%20interested%20in%20${products.name}`}
+              href={`https://wa.me/${products.whatsappNumber}?text=Hello,%20I%20am%20interested%20in%20${products.name}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1"
@@ -116,6 +146,9 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
+
+      {/* Product Variations & Custom Order */}
+      <ProductVariations product={products} />
 
       {/* Recommended Products */}
       <div className="mt-12 sm:mt-16">
