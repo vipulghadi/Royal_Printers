@@ -63,7 +63,7 @@ export default function AdminLayout({ children }) {
         }`}
       >
         <div className="flex h-16 items-center justify-between px-4 border-b">
-          <h1 className="text-lg font-semibold">Royal Printers Admin</h1>
+          <h1 className="text-lg font-semibold text-green-500">Royal Printers Admin</h1>
           <Button
             variant="ghost"
             size="icon"
@@ -110,7 +110,7 @@ export default function AdminLayout({ children }) {
       {/* Main content */}
       <div className="lg:pl-64">
         {/* Top bar */}
-        <div className="sticky top-0 z-30 flex h-16 items-center gap-4 bg-background px-4">
+        <div className="sticky top-0 z-30 flex h-16 items-center gap-4 bg-background px-4 border-b">
           <Button
             variant="ghost"
             size="icon"

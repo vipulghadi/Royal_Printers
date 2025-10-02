@@ -1,8 +1,8 @@
 "use client"
 
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import WhatsAppButton from "@/components/whatsappButton"
+import Header from "@/components/client/header"
+import Footer from "@/components/client/footer"
+import WhatsAppButton from "@/components/client/whatsappButton"
 
 export default function SiteLayout({ children }) {
   return (

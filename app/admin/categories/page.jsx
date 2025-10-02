@@ -4,13 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import {
   Table,
   TableBody,
@@ -21,156 +15,36 @@ import {
 } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { Plus, Edit, Trash2, ImageIcon, Loader2 } from "lucide-react";
+import ProductSaveUpdateDialog from "@/components/admin/product/dialogs/productSaveUpdateDialog";
+import { useAdminCategories, useAdminCategoryMutation } from "@/hooks/admin/useAdminCategories";
+import { toast } from "react-hot-toast";
+import CategoryImageDialog from "@/components/admin/product/dialogs/CategoryImageDialog";
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState([]);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+ 
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false);
   const [isImageDialogOpen, setIsImageDialogOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null);
+  
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [formData, setFormData] = useState({ name: "", isActive: true });
-  const [loading, setLoading] = useState(false);
+  
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const{data, isLoading, refetch}= useAdminCategories();
+  const{createCategory, updateCategory, deleteCategory, toggleCategoryActive}= useAdminCategoryMutation();
+  
 
-  const fetchCategories = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch("/api/categories");
-      const data = await res.json();
-      setCategories(data.data || []);
-    } catch (error) {
-      console.error("Failed to fetch categories:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const url = editingCategory
-        ? `/api/categories/${editingCategory.id}`
-        : "/api/categories/";
-      const method = editingCategory ? "PUT" : "POST";
-
-      await fetch(url, {
-        method,
-        headers: {
-          Authorization: "Bearer admin-token",
-          "Content-Type": "application/json",
+const handleCategoryDelete = async (id) => {
+  if (confirm("Are you sure you want to delete this category?")) {
+    deleteCategory.mutate(id, {
+        onSuccess: () => {
+            toast.success("Category deleted successfully");
+            refetch();
         },
-        body: JSON.stringify(formData),
-      });
-
-      fetchCategories();
-      setIsDialogOpen(false);
-      setEditingCategory(null);
-      setFormData({ name: "", isActive: true });
-    } catch (error) {
-      console.error("Failed to save category:", error);
-    }
-  };
-
-  const handleEdit = (category) => {
-    setEditingCategory(category);
-    setFormData({ name: category.name, isActive: category.isActive });
-    setIsDialogOpen(true);
-  };
-
-  const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this category?")) return;
-
-    try {
-      await fetch(`/api/categories/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer admin-token`,
-        },
-      });
-      fetchCategories();
-    } catch (error) {
-      console.error("Failed to delete category:", error);
-    }
-  };
-
-  const handleImageDialog = (category) => {
-    setSelectedCategory(category);
-    setIsImageDialogOpen(true);
-  };
-
-  const handleImageUpload = async () => {
-    if (!selectedCategory || !selectedCategory.imageFile) return;
-
-    try {
-      const formData = new FormData();
-      formData.append("image", selectedCategory.imageFile);
-      formData.append("categoryId", selectedCategory.id);
-
-      const response = await fetch(`/api/category-images/`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer admin-token",
-        },
-        body: formData,
-      });
-
-      if (response.ok) {
-        fetchCategories();
-        setIsImageDialogOpen(false);
-        setSelectedCategory({ ...selectedCategory, imageFile: null });
-      }
-    } catch (error) {
-      console.error("Failed to upload image:", error);
-    }
-  };
-
-  const handleImageDelete = async () => {
-    if (!selectedCategory) return;
-
-    try {
-      await fetch(`/api/categories/${selectedCategory.id}/image`, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer admin-token",
-        },
-      });
-      fetchCategories();
-      setIsImageDialogOpen(false);
-      setSelectedCategory({ ...selectedCategory, imageFile: null });
-    } catch (error) {
-      console.error("Failed to delete image:", error);
-    }
-  };
-
-  const handleToggleActive = async (category) => {
-    try {
-      await fetch(`/api/categories/${category.id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer admin-token",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...category, isActive: !category.isActive }),
-      });
-      fetchCategories();
-    } catch (error) {
-      console.error("Failed to toggle category status:", error);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="flex h-[70vh] w-full items-center justify-center">
-        <div className="flex items-center gap-3 text-muted-foreground">
-          <Loader2 className="h-5 w-5 animate-spin" />
-          <span>Loading Categories…</span>
-        </div>
-      </div>
-    );
+        onError: (err) => toast.error(err.message || "Something went wrong"),
+    });
   }
+}
+
 
   return (
     <div className="space-y-6">
@@ -181,65 +55,37 @@ export default function CategoriesPage() {
             Manage product categories with images and status
           </p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button
-              onClick={() => {
-                setEditingCategory(null);
-                setFormData({ name: "", isActive: true });
-              }}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Category
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-md">
-            <DialogHeader>
-              <DialogTitle>
-                {editingCategory ? "Edit Category" : "Add Category"}
-              </DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="name">Category Name</Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  placeholder="e.g., Visiting Cards"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="isActive">Active Status</Label>
-                <Switch
-                  id="isActive"
-                  checked={formData.isActive}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, isActive: checked })
-                  }
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button type="submit">
-                  {editingCategory ? "Update" : "Create"}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setIsDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
+        <Button
+            onClick={() => {
+                setSelectedCategory(null);
+                setIsCategoryDialogOpen(true);
+            }}
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add Category
+          </Button>
 
-      <div className="overflow-x-auto">
+        <ProductSaveUpdateDialog
+          isDialogOpen={isCategoryDialogOpen}
+          setIsDialogOpen={setIsCategoryDialogOpen}
+          category={selectedCategory}
+          createCategory={createCategory}
+          updateCategory={updateCategory}
+         
+          />
+          <CategoryImageDialog
+           isDialogOpen={isImageDialogOpen} 
+           setIsDialogOpen={setIsImageDialogOpen} 
+           selectedCategory={selectedCategory}
+           onImageUploadSuccess={() => refetch()}/>
+        
+      </div>
+      {isLoading?      <div className="flex h-[70vh] w-full items-center justify-center">
+        <div className="flex items-center gap-3 text-muted-foreground">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span>Loading Categories…</span>
+        </div>
+      </div>: <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -251,7 +97,7 @@ export default function CategoriesPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {categories.map((category) => (
+            {data.data?.map((category) => (
               <TableRow key={category.id}>
                 <TableCell>
                   <div className="w-[100px] h-[60px] relative">
@@ -273,7 +119,7 @@ export default function CategoriesPage() {
                 <TableCell>
                   <Switch
                     checked={category.isActive}
-                    onCheckedChange={() => handleToggleActive(category)}
+                    
                   />
                 </TableCell>
                 <TableCell>
@@ -281,21 +127,26 @@ export default function CategoriesPage() {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleEdit(category)}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setIsCategoryDialogOpen(true);
+                      }}
                     >
                       <Edit className="w-4 h-4" />
                     </Button>
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleDelete(category.id)}
+                      onClick={() => handleCategoryDelete(category.id)}
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleImageDialog(category)}
+                      onClick={() =>{
+                        setIsImageDialogOpen(true)
+                        setSelectedCategory(category)}}
                     >
                       <ImageIcon className="w-4 h-4" />
                     </Button>
@@ -305,55 +156,11 @@ export default function CategoriesPage() {
             ))}
           </TableBody>
         </Table>
-      </div>
+      </div>}
 
-      <Dialog open={isImageDialogOpen} onOpenChange={setIsImageDialogOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Manage Category Image</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="image">Upload Image</Label>
-              <Input
-                id="image"
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setSelectedCategory({
-                    ...selectedCategory,
-                    imageFile: e.target.files[0],
-                  })
-                }
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button
-                onClick={handleImageUpload}
-                disabled={!selectedCategory?.imageFile}
-              >
-                Upload Image
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={handleImageDelete}
-                disabled={!selectedCategory?.images?.length}
-              >
-                Delete Image
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setIsImageDialogOpen(false);
-                  setSelectedCategory(null);
-                }}
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+
+
+
     </div>
   );
 }

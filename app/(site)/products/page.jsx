@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Search } from "lucide-react"; // using lucide-react icons
-import ProductCard from "@/components/productCard";
+import ProductCard from "@/components/client/productCard";
 
 const products = [
   { id: 1, name: "Business Cards", category: "Stationery", price: "₹199", img: "https://picsum.photos/300/200?1" },

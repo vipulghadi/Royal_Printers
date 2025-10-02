@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Star, ShoppingCart, MessageCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import RecommndedProducts from "@/components/recommndedProducts";
-import ProductVariations from "@/components/productVariationsPricing";
+import RecommndedProducts from "@/components/client/recommndedProducts";
+import ProductVariations from "@/components/client/productVariationsPricing";
 
 // Dummy product data
 const products = {
