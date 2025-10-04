@@ -40,7 +40,7 @@ const FileUpload = ({ onFileSelect, accept = "image/*" }) => {
     <div className="flex flex-col items-center gap-3">
       {/* Logo / Preview */}
       <div
-        className="w-64 h-64 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer overflow-hidden"
+        className="w-64 h-64 rounded-xl bg-gray-100 flex items-center justify-center cursor-pointer overflow-hidden"
         onClick={handleLogoClick}
       >
         {selectedFile ? (

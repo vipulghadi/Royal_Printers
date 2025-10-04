@@ -123,7 +123,7 @@ export const DELETE = requireAdmin(async (req, { params }) => {
           });
         }
     
-        await prisma.ProductAttribute.update({
+        await prisma.ProductAttribute.delete({
           where: { id: Number(id) },
     
         });

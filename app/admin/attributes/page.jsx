@@ -17,12 +17,12 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Edit, Trash2, Search, X, List, Loader2 } from "lucide-react";
 
 import { toast } from "react-hot-toast";
-import AttributeSaveUpdateDialog from "@/components/admin/attributes/dialogs/attributeSaveUpdateDialog";
+import AttributeSaveUpdateDialog from "@/components/admin/dialogs/attributeSaveUpdateDialog";
 import { useAdminAttributes, useAdminAttributesMutation } from "@/hooks/admin/useAdminAttributes";
 import { Switch } from "@/components/ui/switch";
 
 export default function AttributesPage() {
- const { data, isLoading, isError, refetch } = useAdminAttributes();
+ const { data, isLoading, isError, refetch } = useAdminAttributes(false);
 const attributes = data?.data || [];
 const {createAttribute, updateAttribute,deleteAttribute } = useAdminAttributesMutation();
 

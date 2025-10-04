@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import paginator from "@/lib/paginator";
 import { z } from "zod";
 import { generateSlug } from "@/lib/utils";
+import { Prisma } from "@prisma/client";
 
 const createProductSchema = z.object({
   name: z.string().min(3, { message: "Name is required" }),
@@ -22,25 +23,9 @@ export const GET = async (req) => {
     const page = parseInt(searchParams.get("page")) || 1;
     const limit = parseInt(searchParams.get("limit")) || 10;
 
-    const result = await paginator(
-      prisma.Product,
-      {
-        where: {  isActive: true },
-        orderBy: { createdAt: "desc" },
-        include: {
-          category: true,
-          images: {
-            where: { isActive: true },
-            orderBy: { createdAt: "desc" },
-            take: 1,
-          },
-        },
-        
-      },
-      page,
-      limit
-    );
-
+    const result=await paginator(
+        prisma.Product
+    )
     return apiResponse({
       data: result,
       message: "products fetched successfully",
@@ -62,6 +47,8 @@ export const GET = async (req) => {
 export const POST = requireAdmin(async (req) => {
     try {
         const data = await req.json();
+        console.log(data);
+        
         const parsedData = createProductSchema.parse(data);
     
         // Check if the attribute option already exists

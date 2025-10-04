@@ -45,6 +45,7 @@ export function useAdminProductMutation() {
   });
 
   const updateProduct = useMutation({
+    
     mutationFn: async ({ id, data }) =>
       adminAPI(`/api/admin/products/${id}`, {
         method: "PUT",

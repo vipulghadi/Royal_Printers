@@ -18,7 +18,7 @@ import {
   useAdminAttributeOptions,
   useAdminAttributeOptionsMutation,
 } from "@/hooks/admin/useAdminAttributeOptions";
-import AttributeOptionSaveUpdateDialog from "@/components/admin/attributes/dialogs/attributeOptionSaveUpdateDialog";
+import AttributeOptionSaveUpdateDialog from "@/components/admin/dialogs/attributeOptionSaveUpdateDialog";
 
 export default function AttributeOptionsPage() {
   const { data, isLoading, isError, refetch } = useAdminAttributeOptions();

@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/table";
 import { Switch } from "@/components/ui/switch";
 import { Plus, Edit, Trash2, ImageIcon, Loader2 } from "lucide-react";
-import ProductSaveUpdateDialog from "@/components/admin/product/dialogs/productSaveUpdateDialog";
+import ProductSaveUpdateDialog from "@/components/admin/dialogs/productSaveUpdateDialog";
 import { useAdminCategories, useAdminCategoryMutation } from "@/hooks/admin/useAdminCategories";
 import { toast } from "react-hot-toast";
-import CategoryImageDialog from "@/components/admin/product/dialogs/CategoryImageDialog";
+import CategoryImageDialog from "@/components/admin/dialogs/CategoryImageDialog";
+import CategorySaveUpdateDialog from "@/components/admin/dialogs/categorySaveUpdateDialog";
 
 export default function CategoriesPage() {
  
@@ -65,7 +66,7 @@ const handleCategoryDelete = async (id) => {
             Add Category
           </Button>
 
-        <ProductSaveUpdateDialog
+        <CategorySaveUpdateDialog
           isDialogOpen={isCategoryDialogOpen}
           setIsDialogOpen={setIsCategoryDialogOpen}
           category={selectedCategory}

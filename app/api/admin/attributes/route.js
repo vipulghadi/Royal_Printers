@@ -7,13 +7,13 @@ import { z } from "zod";
 export const GET=async (req)=>{
     try {
         const { searchParams } = new URL(req.url);
-        const isActive = searchParams.get("isActive")? searchParams.get("isActive") === "true" : true;
+        
         const includeOptions = searchParams.get("includeOptions") ? searchParams.get("includeOptions") === "true" : false;
 
     
         
         const attributes = await prisma.attribute.findMany({
-        where: { isActive: isActive },
+        
         include: includeOptions ? { options: { where: { isActive: true } } } : false,
         orderBy: { createdAt: "desc" },
         });

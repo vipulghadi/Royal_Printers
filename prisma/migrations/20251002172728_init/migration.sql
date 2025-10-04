@@ -2,14 +2,25 @@
 CREATE TABLE "public"."Category" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(100) NOT NULL,
-    "imageUrl" VARCHAR(2048),
     "slug" VARCHAR(200) NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."CategoryImage" (
+    "id" SERIAL NOT NULL,
+    "url" VARCHAR(2048) NOT NULL,
+    "altText" VARCHAR(255),
+    "categoryId" INTEGER NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "CategoryImage_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -18,10 +29,12 @@ CREATE TABLE "public"."Product" (
     "name" VARCHAR(255) NOT NULL,
     "slug" VARCHAR(100) NOT NULL,
     "description" TEXT,
-    "basePrice" DECIMAL(10,2) NOT NULL,
-    "categoryId" INTEGER NOT NULL,
+    "basePrice" INTEGER NOT NULL,
+    "categoryId" INTEGER,
+    "isTrending" BOOLEAN NOT NULL DEFAULT false,
+    "isNew" BOOLEAN NOT NULL DEFAULT false,
+    "isFeatured" BOOLEAN NOT NULL DEFAULT false,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -35,7 +48,6 @@ CREATE TABLE "public"."ProductImage" (
     "altText" VARCHAR(255),
     "productId" INTEGER NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -47,7 +59,6 @@ CREATE TABLE "public"."Attribute" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -61,7 +72,6 @@ CREATE TABLE "public"."AttributeOption" (
     "description" TEXT,
     "attributeId" INTEGER NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -74,9 +84,8 @@ CREATE TABLE "public"."ProductAttribute" (
     "productId" INTEGER NOT NULL,
     "attributeId" INTEGER NOT NULL,
     "attributeOptionId" INTEGER NOT NULL,
-    "priceAdjustment" DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    "priceAdjustment" INTEGER NOT NULL DEFAULT 0,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
-    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -87,19 +96,22 @@ CREATE TABLE "public"."ProductAttribute" (
 CREATE UNIQUE INDEX "Category_slug_key" ON "public"."Category"("slug");
 
 -- CreateIndex
-CREATE INDEX "Category_slug_isActive_isDeleted_idx" ON "public"."Category"("slug", "isActive", "isDeleted");
+CREATE INDEX "Category_slug_isActive_idx" ON "public"."Category"("slug", "isActive");
+
+-- CreateIndex
+CREATE INDEX "CategoryImage_categoryId_idx" ON "public"."CategoryImage"("categoryId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Product_slug_key" ON "public"."Product"("slug");
 
 -- CreateIndex
-CREATE INDEX "Product_categoryId_slug_isActive_isDeleted_idx" ON "public"."Product"("categoryId", "slug", "isActive", "isDeleted");
+CREATE INDEX "Product_categoryId_slug_isActive_idx" ON "public"."Product"("categoryId", "slug", "isActive");
 
 -- CreateIndex
 CREATE INDEX "ProductImage_productId_idx" ON "public"."ProductImage"("productId");
 
 -- CreateIndex
-CREATE INDEX "Attribute_name_isActive_isDeleted_idx" ON "public"."Attribute"("name", "isActive", "isDeleted");
+CREATE INDEX "Attribute_name_isActive_idx" ON "public"."Attribute"("name", "isActive");
 
 -- CreateIndex
 CREATE INDEX "AttributeOption_attributeId_idx" ON "public"."AttributeOption"("attributeId");
@@ -111,7 +123,10 @@ CREATE INDEX "ProductAttribute_productId_attributeId_attributeOptionId_idx" ON "
 CREATE UNIQUE INDEX "ProductAttribute_productId_attributeId_attributeOptionId_key" ON "public"."ProductAttribute"("productId", "attributeId", "attributeOptionId");
 
 -- AddForeignKey
-ALTER TABLE "public"."Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "public"."Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."CategoryImage" ADD CONSTRAINT "CategoryImage_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "public"."Category"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "public"."Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."ProductImage" ADD CONSTRAINT "ProductImage_productId_fkey" FOREIGN KEY ("productId") REFERENCES "public"."Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -37,7 +37,7 @@ import { useRouter } from "next/navigation";
 import ProductCard from "@/components/client/productCard";
 import { useAdminProductMutation, useAdminProducts } from "@/hooks/admin/useAdminProducts";
 import AdminProductCard from "@/components/admin/product/adminProductCard";
-import ProductSaveUpdateDialog from "@/components/admin/product/dialogs/productSaveUpdateDialog";
+import ProductSaveUpdateDialog from "@/components/admin/dialogs/productSaveUpdateDialog";
 
 export default function ProductPage() {
 

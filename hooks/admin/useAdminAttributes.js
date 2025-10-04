@@ -3,11 +3,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { adminAPI } from "@/lib/api"; 
 
 // Fetch categories
-export function useAdminAttributes() {
+export function useAdminAttributes(includeOptions=false) {
   return useQuery({
     queryKey: ["admin-attributes"],
-    queryFn: async () => {
-      const data = await adminAPI("/api/admin/attributes",{
+    
+     queryFn: async () => {
+      const data = await adminAPI(includeOptions?"/api/admin/attributes?includeOptions=true":"/api/admin/attributes",{
         method: "GET",
       });
       return data.data;

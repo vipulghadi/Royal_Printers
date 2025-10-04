@@ -26,6 +26,7 @@ function ProductSaveUpdateDialog({
   selectedProduct,
   createProduct,
   updateProduct,
+  refetch
 }) {
   const [productData, setProductData] = useState({
     name: "",
@@ -89,13 +90,20 @@ function ProductSaveUpdateDialog({
 
     if (selectedProduct) {
       updateProduct.mutate(
-        { id: selectedProduct.id, ...productData },
+        { id: selectedProduct.id, data:productData },
         {
           onSuccess: () => {
             toast.success("Product updated successfully");
             setIsDialogOpen(false);
+            refetch()
           },
-          onError: () => toast.error("Failed to update product"),
+          onError: (error) => {
+    console.log(error.message);
+    
+            
+            toast.error(error?.message||"Fail to create product...");
+            
+            },
         }
       );
     } else {
@@ -167,8 +175,8 @@ function ProductSaveUpdateDialog({
             <Label className="mb-1">Base Price</Label>
             <Input
               type="number"
-              value={productData.basePrice}
-              onChange={(e) => handleChange("basePrice",parseInt(e.target.value))}
+              value={Number(productData.basePrice)}
+              onChange={(e) => handleChange("basePrice",Number(e.target.value))}
             />
           </div>
 

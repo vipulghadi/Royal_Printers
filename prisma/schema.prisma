@@ -44,7 +44,7 @@ model Product {
   name          String              @db.VarChar(255)
   slug          String              @unique @db.VarChar(100)
   description   String?             @db.Text
-  basePrice     Decimal             @db.Decimal(10, 2)
+  basePrice     Int           
   categoryId    Int?
   category      Category?           @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   images        ProductImage[]
@@ -112,7 +112,7 @@ model ProductAttribute {
   attribute         Attribute       @relation(fields: [attributeId], references: [id], onDelete: Restrict)
   attributeOptionId Int
   attributeOption   AttributeOption @relation(fields: [attributeOptionId], references: [id], onDelete: Restrict)
-  priceAdjustment   Decimal         @db.Decimal(10, 2) @default(0.00)
+  priceAdjustment   Int         @default(0)
   isActive          Boolean         @default(true)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt

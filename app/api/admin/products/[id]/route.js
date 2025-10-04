@@ -16,16 +16,32 @@ const updateProductSchema = z.object({
 });
 
 async function objectExist(id) {
-  const product = await prisma.Product.findUnique({
-    where: { id, },
+  const product = await prisma.product.findUnique({
+    where: { id },
     include: {
-        category: true,
-        attributes: true,
-        images:true
+      category: true,
+      images: true,
+      attributes: {
+        include: {
+          attribute: {       // attribute master (e.g. Size, Color)
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          attributeOption: { // attribute option (e.g. XL, Red)
+            select: {
+              id: true,
+              value: true,
+            },
+          },
+        },
+      },
     },
   });
   return product;
 }
+
 
 export const GET = async (req, { params }) => {
   try {
@@ -49,6 +65,8 @@ export const GET = async (req, { params }) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
+    
     return apiResponse({
       success: false,
       statusCode: 500,
@@ -81,6 +99,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
     const existingProduct = await prisma.Product.findFirst({
       where: { ...parsedData,  },
     });
+console.log(existingProduct);
 
     if (existingProduct) {
       return apiResponse({
@@ -112,7 +131,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
       return apiResponse({
         success: false,
         statusCode: 400,
-        message: error.errors[0].message,
+        message: "error in updating product",
         data: null,
       });
     }
