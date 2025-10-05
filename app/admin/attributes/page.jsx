@@ -20,6 +20,7 @@ import { toast } from "react-hot-toast";
 import AttributeSaveUpdateDialog from "@/components/admin/dialogs/attributeSaveUpdateDialog";
 import { useAdminAttributes, useAdminAttributesMutation } from "@/hooks/admin/useAdminAttributes";
 import { Switch } from "@/components/ui/switch";
+import { CustomBreadcrumb } from "@/components/shared/customBreadCrumb";
 
 export default function AttributesPage() {
  const { data, isLoading, isError, refetch } = useAdminAttributes(false);
@@ -47,6 +48,10 @@ const handleAttributeDelete = async (id) => {
   
   return (
     <div className="space-y-6">
+        <CustomBreadcrumb data={[
+          { title: "Dashboard", link: "/admin/" },
+          { title: "Red T-Shirt" } 
+        ]}/>
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold">Attributes</h1>
@@ -74,6 +79,7 @@ const handleAttributeDelete = async (id) => {
       </div>
 
       <div className="relative w-full max-w-sm">
+        
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"

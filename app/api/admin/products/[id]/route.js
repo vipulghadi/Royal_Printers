@@ -13,6 +13,9 @@ const updateProductSchema = z.object({
         invalid_type_error: "Category ID must be a number",
     }).int({ message: "Category ID must be an integer" }).positive({ message: "Category ID must be positive" }),
     isActive: z.boolean(),
+    isTrending:z.boolean(),
+    isFeatured:z.boolean(),
+    isNew:z.boolean()
 });
 
 async function objectExist(id) {
@@ -97,7 +100,7 @@ export const PUT = requireAdmin(async (req, { params }) => {
 
     // Check if the product with the same name already exists
     const existingProduct = await prisma.Product.findFirst({
-      where: { ...parsedData,  },
+      where: { ...parsedData, id:{not: parsedData.id} },
     });
 console.log(existingProduct);
 

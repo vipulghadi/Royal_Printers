@@ -2,7 +2,7 @@ import { apiResponse } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import paginator from "@/lib/paginator";
-import { z } from "zod";
+import { includes, z } from "zod";
 import { generateSlug } from "@/lib/utils";
 import { Prisma } from "@prisma/client";
 
@@ -24,7 +24,11 @@ export const GET = async (req) => {
     const limit = parseInt(searchParams.get("limit")) || 10;
 
     const result=await paginator(
-        prisma.Product
+        prisma.Product,{
+            include:{
+                images:true
+            }
+        }
     )
     return apiResponse({
       data: result,

@@ -92,7 +92,7 @@ function ProductAttributeSaveUpdateDialog({
           setIsProductAttributeDialogOpen(false);
           refetch()
         },
-        onError: () => toast.error("Failed to create product attribute"),
+        onError: (error) => toast.error(error.message||"Failed to create product attribute"),
       });
     }
   };

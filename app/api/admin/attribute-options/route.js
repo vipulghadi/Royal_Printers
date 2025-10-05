@@ -1,7 +1,7 @@
 import { apiResponse } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth";
 import prisma from "@/lib/prisma";
-import { includes, z } from "zod";
+import {  z } from "zod";
 
 const createAttributeOptionSchema = z.object({
   value: z.string().min(1, { message: "Name is required" }),
@@ -47,7 +47,7 @@ export const POST = requireAdmin(async (req) => {
   try {
     const data = await req.json();
     const parsedData = createAttributeOptionSchema.parse(data);
-    console.log(parsedData);
+    
 
     // Check if the attribute option already exists
     const existingAttributeOption = await prisma.AttributeOption.findFirst({
@@ -88,7 +88,9 @@ export const POST = requireAdmin(async (req) => {
         data: null,
       });
     }
-    console.error("Error creating attribute option:", error);
+    console.log(error);
+    
+    
     return apiResponse({
       success: false,
       statusCode: 500,

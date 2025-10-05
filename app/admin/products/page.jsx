@@ -38,6 +38,7 @@ import ProductCard from "@/components/client/productCard";
 import { useAdminProductMutation, useAdminProducts } from "@/hooks/admin/useAdminProducts";
 import AdminProductCard from "@/components/admin/product/adminProductCard";
 import ProductSaveUpdateDialog from "@/components/admin/dialogs/productSaveUpdateDialog";
+import { CustomBreadcrumb } from "@/components/shared/customBreadCrumb";
 
 export default function ProductPage() {
 
@@ -68,6 +69,10 @@ if(isError){
 
   return (
     <div className="space-y-6 container mx-auto px-4">
+        <CustomBreadcrumb data={[
+          { title: "Dashboard", link: "/admin/" },
+          { title: "Red T-Shirt" } 
+        ]}/>
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-xl sm:text-3xl font-bold text-gray-900">

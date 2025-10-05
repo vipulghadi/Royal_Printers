@@ -76,7 +76,7 @@ export const GET = async (req) => {
   }
 };
 
-// ✅ POST handler
+
 export const POST = requireAdmin(async (req) => {
   try {
     const data = await req.json();

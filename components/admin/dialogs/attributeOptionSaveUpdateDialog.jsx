@@ -70,7 +70,7 @@ function AttributeOptionSaveUpdateDialog({
             toast.success("Option updated successfully");
             onOpenChange(false);
           },
-          onError: () => toast.error("Failed to update option"),
+          onError: (error) => toast.error(error.message||"Failed to update option"),
         }
       );
     } else {
@@ -79,7 +79,7 @@ function AttributeOptionSaveUpdateDialog({
           toast.success("Option created successfully");
           onOpenChange(false);
         },
-        onError: () => toast.error("Failed to create option"),
+        onError: (error) => toast.error(error.message||"Failed to create option"),
       });
     }
   };

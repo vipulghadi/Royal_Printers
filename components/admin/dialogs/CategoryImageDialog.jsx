@@ -19,7 +19,7 @@ function CategoryImageDialog({
     selectedCategory, 
     isDialogOpen, 
     setIsDialogOpen,
-onImageUploadSuccess}) {
+refetch}) {
  console.log("Selected Cat in dialog",selectedCategory);
  
 
@@ -30,14 +30,11 @@ const handleImageUpload = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("categoryId", selectedCategory.id);
-    const response=adminAPI("/api/admin/category-images/",{
+    const response=await adminAPI("/api/admin/category-images/",{
         method: "POST", body: formData
-    })
-    
-
-    toast.success("Image uploaded successfully");
-    onImageUploadSuccess?.(); // trigger refetch in parent
+    }).
     setIsDialogOpen(false);
+    refetch();
   } catch (err) {
     toast.error(err.message || "Upload failed");
   }

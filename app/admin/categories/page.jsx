@@ -20,6 +20,7 @@ import { useAdminCategories, useAdminCategoryMutation } from "@/hooks/admin/useA
 import { toast } from "react-hot-toast";
 import CategoryImageDialog from "@/components/admin/dialogs/CategoryImageDialog";
 import CategorySaveUpdateDialog from "@/components/admin/dialogs/categorySaveUpdateDialog";
+import { CustomBreadcrumb } from "@/components/shared/customBreadCrumb";
 
 export default function CategoriesPage() {
  
@@ -49,7 +50,12 @@ const handleCategoryDelete = async (id) => {
 
   return (
     <div className="space-y-6">
+          <CustomBreadcrumb data={[
+    { title: "Dashboard", link: "/admin/" },
+    { title: "Red T-Shirt" } 
+  ]}/>
       <div className="flex justify-between items-center">
+
         <div>
           <h1 className="text-xl sm:text-3xl font-bold">Categories</h1>
           <p className="text-muted-foreground sm:block hidden">
@@ -72,13 +78,14 @@ const handleCategoryDelete = async (id) => {
           category={selectedCategory}
           createCategory={createCategory}
           updateCategory={updateCategory}
+          refetch={refetch}
          
           />
           <CategoryImageDialog
            isDialogOpen={isImageDialogOpen} 
            setIsDialogOpen={setIsImageDialogOpen} 
            selectedCategory={selectedCategory}
-           onImageUploadSuccess={() => refetch()}/>
+           refetch={refetch}/>
         
       </div>
       {isLoading?      <div className="flex h-[70vh] w-full items-center justify-center">

@@ -17,6 +17,7 @@ function CategorySaveUpdateDialog({
   category,
   createCategory,
   updateCategory,
+  refetch
 }) {
   const [categoryData, setCategoryData] = useState({
     name: "",
@@ -56,8 +57,9 @@ function CategorySaveUpdateDialog({
           onSuccess: () => {
             toast.success("Category updated successfully");
             setIsDialogOpen(false);
+            refetch()
           },
-          onError: () => toast.error("Failed to update category"),
+          onError: (error) => toast.error(error.message||"Failed to update category"),
         }
       );
     } else {
@@ -65,8 +67,9 @@ function CategorySaveUpdateDialog({
         onSuccess: () => {
           toast.success("Category created successfully");
           setIsDialogOpen(false);
+          refetch()
         },
-        onError: () => toast.error("Failed to create category"),
+        onError: (error) => toast.error(error.message||"Failed to create category"),
       });
     }
   };

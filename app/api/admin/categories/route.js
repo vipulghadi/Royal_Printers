@@ -8,7 +8,6 @@ import { generateSlug } from "@/lib/utils";
 import { apiResponse } from "@/lib/apiResponse";
 
 
-
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -79,7 +78,6 @@ export const POST = requireAdmin(async (req) => {
         data: null,
       });
     }
-
 
     const slug = generateSlug(name);
     const category = await prisma.category.create({

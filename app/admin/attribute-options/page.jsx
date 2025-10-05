@@ -19,6 +19,7 @@ import {
   useAdminAttributeOptionsMutation,
 } from "@/hooks/admin/useAdminAttributeOptions";
 import AttributeOptionSaveUpdateDialog from "@/components/admin/dialogs/attributeOptionSaveUpdateDialog";
+import { CustomBreadcrumb } from "@/components/shared/customBreadCrumb";
 
 export default function AttributeOptionsPage() {
   const { data, isLoading, isError, refetch } = useAdminAttributeOptions();
@@ -55,6 +56,10 @@ export default function AttributeOptionsPage() {
 
   return (
     <div className="space-y-6">
+        <CustomBreadcrumb data={[
+          { title: "Dashboard", link: "/admin/" },
+          { title: "Red T-Shirt" } 
+        ]}/>
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
