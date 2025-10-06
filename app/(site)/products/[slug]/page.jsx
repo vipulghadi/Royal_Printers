@@ -41,7 +41,7 @@ export default function ProductPage() {
   }, {});
 
   return (
-    <div className="w-full mt-5">
+    <div className="w-[90vw] mx-auto mt-5">
       {/* Product Section */}
       <div className="flex flex-col md:flex-row gap-8 md:h-[80vh]">
         {/* Left: Image Section */}

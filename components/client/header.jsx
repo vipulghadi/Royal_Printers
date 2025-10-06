@@ -59,7 +59,7 @@ export default function Header() {
         href={href}
         className={`text-base px-2 py-1 rounded-md ${
           active
-            ? "font-semibold text-green-500"
+            ? "font-semibold text-red-500"
             : "text-muted-foreground hover:text-foreground"
         }`}
       >
@@ -71,18 +71,18 @@ export default function Header() {
   return (
     <>
       <header
-        className={`bg-slate-50 fixed top-0 left-0 right-0 z-50 w-full transition-all ${
+        className={`bg-white fixed top-0 left-0 right-0 z-50 w-full transition-all ${
           scrolled ? "shadow-md" : "bg-white"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto   h-20 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 font-bold text-xl md:text-2xl"
           >
-            <Printer className="w-6 h-6 text-green-500" />
-            <span className="">Royal Printers</span>
+            <Printer className="w-6 h-6 text-red-500" />
+            <span className="text-red-500">Royal Printers</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -96,7 +96,7 @@ export default function Header() {
 
           {/* Desktop Search */}
           <div className="hidden md:flex items-center">
-            <Button variant="outline" className="bg-green-500 text-white hover:bg-gray-100 mr-4">
+            <Button variant="outline" className="bg-red-500 text-white hover:bg-pink-500 mr-4">
               Contact Us
             </Button>
           </div>

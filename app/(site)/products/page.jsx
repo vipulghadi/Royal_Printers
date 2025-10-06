@@ -4,27 +4,20 @@ import { useState } from "react";
 import { Search } from "lucide-react"; // using lucide-react icons
 import ProductCard from "@/components/client/productCard";
 
-const products = [
-  { id: 1, name: "Business Cards", category: "Stationery", price: "₹199", img: "https://picsum.photos/300/200?1" },
-  { id: 2, name: "Flyers", category: "Marketing", price: "₹299", img: "https://picsum.photos/300/200?2" },
-  { id: 3, name: "Posters", category: "Marketing", price: "₹499", img: "https://picsum.photos/300/200?3" },
-  { id: 4, name: "T-Shirts", category: "Merchandise", price: "₹799", img: "https://picsum.photos/300/200?4" },
-  { id: 5, name: "Banners", category: "Outdoor", price: "₹999", img: "https://picsum.photos/300/200?5" },
-  { id: 6, name: "Stickers", category: "Stationery", price: "₹149", img: "https://picsum.photos/300/200?6" },
-];
+import { dummyProducts } from "@/lib/dummyData";
 
 export default function ProductsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = dummyProducts.filter((product) => {
     const matchesName = product.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = category === "All" || product.category === category;
     return matchesName && matchesCategory;
   });
 
   return (
-    <section className="w-full py-10 px-4 max-w-7xl mx-auto ">
+    <section className="w-[90%] mx-auto  py-10 px-4 max-w-7xl mx-auto ">
       {/* Page Heading */}
       <h1 className="text-3xl font-bold mb-6 text-center">Our Products</h1>
 

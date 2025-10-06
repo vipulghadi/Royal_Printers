@@ -3,15 +3,17 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { WordRotate } from "@/components/ui/word-rotate"
+import { cn } from "@/lib/utils"
+import { AnimatedGridPattern } from "../ui/animated-grid-pattern"
 
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full min-h-[80vh] rounded-2xl overflow-hidden bg-primary  ">
+    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full h-[90vh] overflow-hidden bg-gradient-to-r from-red-500  to-orange-500  ">
 
 
       {/* Left Side */}
-      <div className="relative z-10 w-full sm:w-1/2 flex flex-col items-start space-y-6 p-6">
+      <div className=" w-full sm:w-1/2 flex flex-col items-start space-y-6 p-6">
         {/* Small Rotating Heading */}
         <h3 className="text-3xl font-medium uppercase tracking-wide">
           <WordRotate
@@ -44,8 +46,8 @@ export default function Hero() {
       </div>
 
       {/* Right Side: Absolute Main Image with Floating Cards */}
-      <div className="relative z-10 w-full sm:w-1/2  h-[400px] sm:h-[500px] mt-12 sm:mt-0  flex items-center justify-center  overflow-hidden">
-      <img src="https://imagine-public.x.ai/imagine-public/images/6c7c485a-a89a-4d4b-8ac3-77c35d15cf54.png?cache=1" alt="" className="absolute "/>
+      <div className=" w-full sm:w-1/2 bg-red-500  h-full  mt-12 sm:mt-0  flex items-center justify-center  overflow-hidden">
+      <img src="https://imagine-public.x.ai/imagine-public/images/6c7c485a-a89a-4d4b-8ac3-77c35d15cf54.png?cache=1" alt="" className=" h-full w-full object-cover  "/>
     
         
       </div>

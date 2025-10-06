@@ -7,7 +7,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ProductCard from "./productCard";
-
+import { dummyProducts } from "@/lib/dummyData";
 function ProductSkeleton() {
   return (
     <div className="rounded-lg border bg-gray-100 animate-pulse p-4 flex flex-col items-center">
@@ -24,16 +24,7 @@ function RecommendedProducts({ productId }) {
 
   useEffect(() => {
     setTimeout(() => {
-      setProducts([
-        { id: 1, name: "Business Cards", price: "₹199", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 2, name: "Flyers", price: "₹299", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 3, name: "Posters", price: "₹499", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 4, name: "T-Shirts", price: "₹799", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 5, name: "T-Shirts", price: "₹799", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 6, name: "T-Shirts", price: "₹799", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 7, name: "T-Shirts", price: "₹799", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-        { id: 8, name: "T-Shirts", price: "₹799", img: "https://toffle.in/cdn/shop/files/wtwide1.jpg?v=1709646109&width=800" },
-      ]);
+      setProducts(dummyProducts.slice(0,8));
       setLoading(false);
     }, 1500);
   }, [productId]);

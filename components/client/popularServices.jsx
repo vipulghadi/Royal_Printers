@@ -1,14 +1,9 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import OurTeam from "@/components/client/ourTeamSection";
 
-export default function AboutUs() {
+export default function PopularServices() {
   return (
-    <div className="w-full  flex flex-col gap-16  mx-auto">
-
     <div className="relative overflow-hidden bg-orange-100">
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
@@ -98,20 +93,6 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
-    </div>
-
-
-
-<OurTeam/>
-
-
-
-      {/* Call to Action */}
-      <section className="bg-amber-200 p-8 rounded-xl text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Print Your Ideas?</h2>
-        <p className="text-gray-700 mb-6">Contact us today and let's bring your vision to life!</p>
-        <Button className="bg-black text-white hover:bg-gray-800">Contact Us</Button>
-      </section>
     </div>
   );
 }
