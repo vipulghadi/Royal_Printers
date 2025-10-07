@@ -47,7 +47,7 @@ export default function ProductPage() {
         {/* Left: Image Section */}
         <div className="flex md:flex-row flex-col gap-4 md:w-1/2">
           {/* Main Image */}
-          <div className="w-full md:w-4/5 h-96 md:h-[80vh] bg-gray-100 overflow-hidden rounded-2xl">
+          <div className="w-full md:w-4/5 h-96 md:h-[80vh] bg-gray-100 overflow-hidden ">
             <img
               src={selectedImg}
               alt={products.name}
@@ -118,10 +118,7 @@ export default function ProductPage() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 w-full mb-6">
-            <Button className="flex-1 flex items-center gap-2 justify-center">
-              <ShoppingCart className="w-5 h-5" />
-              Add to Cart
-            </Button>
+
             <a
               href={`https://wa.me/${products.whatsappNumber}?text=Hello,%20I%20am%20interested%20in%20${products.name}`}
               target="_blank"
@@ -129,20 +126,14 @@ export default function ProductPage() {
               className="flex-1"
             >
               <Button
-                variant="outline"
+                
                 className="w-full flex items-center gap-2 justify-center"
               >
                 <MessageCircle className="w-5 h-5" />
-                WhatsApp
+                Send Quote on WhatsApp
               </Button>
             </a>
-            <Button
-              variant="secondary"
-              className="flex-1 flex items-center gap-2 justify-center"
-            >
-              <CreditCard className="w-5 h-5" />
-              Buy Now
-            </Button>
+
           </div>
         </div>
       </div>

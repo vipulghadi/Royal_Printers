@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"; // ShadCN Select
+} from "@/components/ui/select"; 
 
 export default function ProductVariation({ product }) {
   const grouped = useMemo(() => {
@@ -91,23 +91,23 @@ export default function ProductVariation({ product }) {
   const whatsappLink = `https://wa.me/${product.whatsappNumber}?text=${whatsappMessage()}`;
 
   return (
-    <div className="w-full mt-8">
+    <div className="w-full mt-8 border py-5">
       <h1 className="text-xl sm:text-2xl font-semibold text-center mb-6">
         Customize Your Order
       </h1>
-      <div className="flex flex-col lg:flex-row gap-4 bg-white p-4 rounded-2xl border shadow-sm">
+      <div className="flex flex-col lg:flex-row gap-4 bg-white p-4 ">
 
         {/* Left: Variations */}
         <div className="flex-1 space-y-3">
           {Object.keys(grouped).map((type) => (
-            <div key={type}>
-              <h3 className="text-sm font-medium mb-1">{type}:</h3>
+            <div key={type} className="flex items-center">
+              <h3 className="text-sm mr-4 mb-1 font-semibold">{type}:</h3>
               <div className="flex flex-wrap gap-2">
                 {grouped[type].map((opt) => (
                   <Button
                     key={opt.id}
-                    size="sm"
-                    variant={selection[type] === opt.value ? "default" : "outline"}
+                
+                    className="rounded-none bg-white border text-black border-red-400"
                     onClick={() => updateSelection(type, opt.value)}
                   >
                     {opt.value}

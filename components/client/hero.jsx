@@ -9,15 +9,17 @@ import { AnimatedGridPattern } from "../ui/animated-grid-pattern"
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full h-[90vh] overflow-hidden bg-gradient-to-r from-red-500  to-orange-500  ">
+    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full h-auto sm:h-[90vh] overflow-hidden  " style={{
+        backgroundImage:"url('/heroBG_.png')"
+    }}>
 
 
       {/* Left Side */}
-      <div className=" w-full sm:w-1/2 flex flex-col items-start space-y-6 p-6">
+      <div className=" h-[100vh] sm:h-[90vh]  w-full sm:w-1/2 flex flex-col items-start space-y-6 p-6">
         {/* Small Rotating Heading */}
         <h3 className="text-3xl font-medium uppercase tracking-wide">
           <WordRotate
-            className="text-black inline-block"
+            className="text-white inline-block"
             words={["Printing", "Design", "Branding"]}
           />
         </h3>
@@ -46,7 +48,7 @@ export default function Hero() {
       </div>
 
       {/* Right Side: Absolute Main Image with Floating Cards */}
-      <div className=" w-full sm:w-1/2 bg-red-500  h-full  mt-12 sm:mt-0  flex items-center justify-center  overflow-hidden">
+      <div className=" w-full sm:w-1/2  sm:h-full  mt-12 sm:mt-0  hidden sm:flex items-center justify-center  overflow-hidden">
       <img src="https://imagine-public.x.ai/imagine-public/images/6c7c485a-a89a-4d4b-8ac3-77c35d15cf54.png?cache=1" alt="" className=" h-full w-full object-cover  "/>
     
         

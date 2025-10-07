@@ -10,12 +10,12 @@ function ProductCard({ product, adminPage = false }) {
     <Link
         href={productLink}
     >
-      <div className="overflow-hidden rounded-2xl cursor-pointer transition">
-        <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden  cursor-pointer transition">
+        <div className="overflow-hidden ">
           <img
             src={product.imageUrl || ""}
             alt={product.name}
-            className="w-full sm:h-80 h-40 object-cover rounded-2xl transform transition-transform duration-500 hover:scale-110"
+            className="w-full sm:h-80 h-40 object-cover  transform transition-transform duration-500 hover:scale-110"
           />
         </div>
         <div className="p-3 flex flex-col justify-between">

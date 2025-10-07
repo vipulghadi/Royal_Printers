@@ -9,13 +9,20 @@ export default function PopularServices() {
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Royal Printers
+              Our Popular Printing Services
             </h1>
-            <p className="mt-4 text-xl text-gray-500">
-              We provide high-quality printing services for banners, ID cards, visiting cards, flex printing, and more. 
-              Tailored to meet all your business and personal needs.
+            <p className="mt-4 text-lg text-gray-600 leading-relaxed">
+              At <strong>Royal Printers</strong>, we specialize in a wide range of
+              <strong> professional printing solutions</strong> designed to elevate your
+              brand and business presence. From <strong>custom banners</strong> and
+              <strong> visiting cards</strong> to <strong>photo gifts</strong> and
+              <strong> packaging solutions</strong>, we deliver precision, quality, and
+              creativity in every print.
             </p>
+
+
           </div>
+
           <div>
             <div className="mt-10">
               <div
@@ -27,38 +34,15 @@ export default function PopularServices() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
                         <img
-                          src="https://placekeanu.com/684/350/"
+                          src={"/Banner.png"}
                           className="h-full w-full object-cover object-center"
-                          alt="Printing Service"
+                          alt="Banner Printing"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
-                          src="https://placekeanu.com/200/300"
-                          alt="Printing Service"
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://placekeanu.com/684/350/"
-                          alt="Printing Service"
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://placekeanu.com/250/350/y"
-                          alt="Printing Service"
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://placekeanu.com/684/350"
-                          alt="Printing Service"
+                          src={"/GiftHamper.png"}
+                          alt="Gift Hamper Printing"
                           className="h-full w-full object-cover object-center"
                         />
                       </div>
@@ -66,15 +50,38 @@ export default function PopularServices() {
                     <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
-                          src="https://placekeanu.com/684/350"
-                          alt="Printing Service"
+                          src={"/Mug.png"}
+                          alt="Custom Mug Printing"
                           className="h-full w-full object-cover object-center"
                         />
                       </div>
                       <div className="h-64 w-44 overflow-hidden rounded-lg">
                         <img
-                          src="https://placebear.com/684/350"
-                          alt="Printing Service"
+                          src={"/Packaging.png"}
+                          alt="Packaging Solutions"
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                        <img
+                          src={"/PhotoAlbum.png"}
+                          alt="Photo Album Printing"
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                        <img
+                          src={"/SchoolID.png"}
+                          alt="School ID Cards"
+                          className="h-full w-full object-cover object-center"
+                        />
+                      </div>
+                      <div className="h-64 w-44 overflow-hidden rounded-lg">
+                        <img
+                          src={"/Sticker.png"}
+                          alt="Sticker Printing"
                           className="h-full w-full object-cover object-center"
                         />
                       </div>

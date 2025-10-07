@@ -9,7 +9,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-export function CustomBreadcrumb({ data = [] }) {
+export function CustomBreadcrumb({ data = [],textColor="text-black" }) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -20,7 +20,7 @@ export function CustomBreadcrumb({ data = [] }) {
                 <Link href={item.link}>{item.title}</Link>
               </BreadcrumbLink>
             ) : (
-              <BreadcrumbPage>{item.title}</BreadcrumbPage>
+              <BreadcrumbPage className={textColor}>{item.title}</BreadcrumbPage>
             )}
 
             {index < data.length - 1 && <BreadcrumbSeparator />}

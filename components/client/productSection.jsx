@@ -2,6 +2,7 @@ import React from "react"
 import { Button } from "../ui/button"
 import ProductCard from "./productCard"
 import { dummyProducts } from "@/lib/dummyData"
+import Link from "next/link"
 
 
 function ProductSection() {
@@ -19,7 +20,9 @@ function ProductSection() {
         ))}
       </div>
           <div className="flex justify-center mt-12 ">
-                    <Button className="cursor-pointer bg-red-500 hover:bg-red-600 px-8 rounded-4xl py-6 font-semibold ">Explore more</Button>
+          <Link href={"/products"}>
+              <Button className="cursor-pointer bg-red-500 hover:bg-red-600 px-8 rounded-4xl py-6 font-semibold ">Explore more</Button></Link>
+                
                         
               </div>
 

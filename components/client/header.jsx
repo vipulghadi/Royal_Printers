@@ -75,14 +75,14 @@ export default function Header() {
           scrolled ? "shadow-md" : "bg-white"
         }`}
       >
-        <div className="max-w-7xl mx-auto   h-20 flex items-center justify-between">
+        <div className="px-2  max-w-7xl mx-auto   h-20 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center gap-2 font-bold text-xl md:text-2xl"
           >
-            <Printer className="w-6 h-6 text-red-500" />
-            <span className="text-red-500">Royal Printers</span>
+            <Printer className="w-8 h-8 text-red-500" />
+            <span className="text-black uppercase">Royal Printers</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -104,12 +104,11 @@ export default function Header() {
           {/* Mobile Menu Trigger */}
           <div className="md:hidden relative">
             <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Toggle menu"
+             
+             className="bg-red-500"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-24 h-24" />
             </Button>
           </div>
         </div>

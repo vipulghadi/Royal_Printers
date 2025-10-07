@@ -2,6 +2,7 @@ import React from "react"
 import CategoryCard from "./categoryCard"
 import { Button } from "../ui/button"
 import { dummyCategories } from "@/lib/dummyData"
+import Link from "next/link"
 export default function PopularCategorySection() {
   
 
@@ -21,7 +22,10 @@ export default function PopularCategorySection() {
           ))}
         </div>
         <div className="flex justify-center mt-12 ">
-            <Button className="cursor-pointer bg-red-500 hover:bg-red-600 px-8 rounded-4xl py-6 font-semibold ">Explore more</Button>
+        <Link href={"/categories"}>
+        <Button className="cursor-pointer bg-red-500 hover:bg-red-600 px-8 rounded-4xl py-6 font-semibold ">Explore more</Button>
+        </Link>
+            
         </div>
       </div>
     </section>
