@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { dummyCategories } from '@/lib/dummyData'
 import CategoryCard from '@/components/client/categoryCard'
+import { CustomBreadcrumb } from '@/components/shared/customBreadCrumb'
 
 function CategoriesPage() {
   return (
@@ -27,6 +28,21 @@ function CategoriesPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6"
         >
+
+                <div className="flex mb-2 sm:mb-1">
+                            <div className="inline-block bg-slate-200 px-2 py-1 rounded-2xl">
+                    <CustomBreadcrumb data={[
+                        {
+                            "title":"home",
+                            "link":"/"
+                        },
+                        {
+                            "title":"categories"
+                        }
+                    ]} textColor="text-black"/>
+                </div>
+                </div>
+        
           <h2 className="text-3xl sm:text-4xl font-bold">
             Explore Printing Categories for Every Business Need
           </h2>

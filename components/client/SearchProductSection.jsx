@@ -27,7 +27,7 @@ export default function SearchProductSection() {
 
   return (
     <section
-      className="w-full  h-[90vh] sm:h-[70vh] py-10 px-6 sm:px-12 
+      className="w-full  h-[90vh] sm:h-[75vh] py-10 px-6 sm:px-12 
       bg-gradient-to-b from-red-700 via-red-600 to-red-500 text-white 
       bg-cover bg-center relative"
       style={{
@@ -48,7 +48,20 @@ export default function SearchProductSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6"
         >
-        
+        <div className="flex mb-2 sm:mb-1">
+                    <div className="inline-block bg-slate-200 px-2 py-1 rounded-2xl">
+            <CustomBreadcrumb data={[
+                {
+                    "title":"home",
+                    "link":"/"
+                },
+                {
+                    "title":"products"
+                }
+            ]} textColor="text-black"/>
+        </div>
+        </div>
+
           <h2 className="text-3xl sm:text-4xl font-bold">
             Find Your Perfect Printing Solution
           </h2>

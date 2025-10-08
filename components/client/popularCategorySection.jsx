@@ -8,7 +8,7 @@ export default function PopularCategorySection() {
 
 
   return (
-    <section className="w-full mt-16  py-12 rounded-2xl">
+    <section className="w-full   py-12 bg-orange-100">
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-800">

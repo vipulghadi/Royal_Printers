@@ -3,7 +3,7 @@ import { CheckCircle, Clock, ThumbsUp, Shield } from "lucide-react";
 
 export default function WhyChooseUsSection() {
   return (
-    <section className="w-full bg-gray-50 py-16 ">
+    <section className="w-full  py-16 ">
       <div className="max-w-7xl mx-auto px-6 text-center">
         {/* Section Heading */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

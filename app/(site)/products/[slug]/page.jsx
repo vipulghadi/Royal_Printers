@@ -5,6 +5,7 @@ import { Star, ShoppingCart, MessageCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import RecommndedProducts from "@/components/client/recommndedProducts";
 import ProductVariations from "@/components/client/productVariationsPricing";
+import { CustomBreadcrumb } from "@/components/shared/customBreadCrumb";
 
 // Dummy product data
 const products = {
@@ -41,7 +42,24 @@ export default function ProductPage() {
   }, {});
 
   return (
-    <div className="w-[90vw] mx-auto mt-5">
+    <div className="w-[90vw] mx-auto mt-2">
+            <div className="flex mb-2 sm:mb-1 ">
+                        <div className="inline-block  px-2 py-1 rounded-2xl">
+                <CustomBreadcrumb data={[
+                    {
+                        "title":"home",
+                        "link":"/"
+                    },
+                    {
+                        "title":"products",
+                        "link":"/products/"
+                    },
+                    {
+                        "title":"ProductName"
+                    }
+                ]} textColor="text-black"/>
+            </div>
+            </div>
       {/* Product Section */}
       <div className="flex flex-col md:flex-row gap-8 md:h-[80vh]">
         {/* Left: Image Section */}

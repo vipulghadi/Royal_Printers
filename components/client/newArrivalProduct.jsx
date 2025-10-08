@@ -24,7 +24,7 @@ function NewArrivalProduct() {
   };
 
   return (
-    <section className="w-[90%] mx-auto py-10 border-b mb-10 ">
+    <section className="w-[90%] mx-auto py-10  ">
       <div className="flex justify-center items-center mb-6">
         <h2 className="text-3xl font-bold text-center">New Arrivals</h2>
       </div>

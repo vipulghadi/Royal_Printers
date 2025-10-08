@@ -9,7 +9,7 @@ import { AnimatedGridPattern } from "../ui/animated-grid-pattern"
 
 export default function Hero() {
   return (
-    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full h-auto sm:h-[90vh] overflow-hidden  " style={{
+    <section className="relative flex flex-col sm:flex-row items-center justify-between w-full h-[60vh] sm:h-[90vh] overflow-hidden  " style={{
         backgroundImage:"url('/heroBG_.png')"
     }}>
 

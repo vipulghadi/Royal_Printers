@@ -103,13 +103,11 @@ export default function Header() {
 
           {/* Mobile Menu Trigger */}
           <div className="md:hidden relative">
-            <Button
-             
-             className="bg-red-500"
-              onClick={() => setMobileOpen(!mobileOpen)}
-            >
-              <Menu className="w-24 h-24" />
-            </Button>
+
+              <Menu 
+               onClick={() => setMobileOpen(!mobileOpen)}
+               className="w-8 h-8 text-black" />
+            
           </div>
         </div>
 

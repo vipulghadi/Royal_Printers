@@ -11,7 +11,7 @@ import {
 
 export function CustomBreadcrumb({ data = [],textColor="text-black" }) {
   return (
-    <Breadcrumb>
+    <Breadcrumb className={textColor}>
       <BreadcrumbList>
         {data.map((item, index) => (
           <BreadcrumbItem key={index}>
